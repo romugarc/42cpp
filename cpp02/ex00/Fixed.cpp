@@ -7,7 +7,7 @@ Fixed::Fixed( void ) : _nb(0) {
 	return;
 }
 
-Fixed::Fixed( Fixed const &f ) {
+Fixed::Fixed( Fixed const &f ) : _nb(f._nb) {
 	std::cout << "Copy constructor called" << std::endl;
 	*this = f;
 	return;

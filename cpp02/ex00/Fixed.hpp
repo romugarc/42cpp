@@ -10,7 +10,7 @@ class	Fixed
 		static int	const	_bits;
 	public:
 		Fixed( void );
-		Fixed( Fixed const &src );
+		Fixed( Fixed const &f );
 		~Fixed( void );
 
 		Fixed 	&operator=( Fixed const &rhs );

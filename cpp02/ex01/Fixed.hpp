@@ -11,7 +11,7 @@ class	Fixed
 		static int	const	_bits;
 	public:
 		Fixed( void );
-		Fixed( Fixed const &src );
+		Fixed( Fixed const &f );
 		Fixed( int const toconvert );
 		Fixed( float const toconvertf );
 		~Fixed( void );
