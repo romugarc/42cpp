@@ -6,11 +6,14 @@ int	main(void)
 
 	n = 69;
 	Zombie* newz = zombieHorde(n, "HakunaMatata");
-	while (n > 0)
+	if (newz)
 	{
-		newz[n - 1].announce();
-		n--;
+		while (n > 0)
+		{
+			newz[n - 1].announce();
+			n--;
+		}
+		delete [] newz;
 	}
-	delete [] newz;
 	return (0);
 }
