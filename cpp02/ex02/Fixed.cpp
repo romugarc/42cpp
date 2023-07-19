@@ -2,8 +2,7 @@
 
 int const	Fixed::_bits = 8;
 
-Fixed::Fixed( void ) {
-	_nb = 0;
+Fixed::Fixed( void ) : _nb(0) {
 	return;
 }
 
