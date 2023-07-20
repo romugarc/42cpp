@@ -5,6 +5,10 @@ int	main(int argc, char **argv)
 	if (error_handler(argc, argv) == 0)
 	{
 		std::ifstream	ifs(argv[1]);
+		
+		if (!ifs.is_open())
+			return (error_notexist(ifs, argv[1]));
+		
 		std::string		newf = argv[1];
 		std::ofstream	ofs(newf.append(".replace").c_str());
 		std::string		reads;
@@ -12,8 +16,6 @@ int	main(int argc, char **argv)
 		int				len;
 		bool			done;
 
-		if (!ifs.is_open())
-			return (error_fstream(ifs, ofs, argv[1]));
 		if (!ofs.is_open())
 			return (error_fstream(ifs, ofs, newf));
 		len = std::char_traits<char>::length(argv[2]);

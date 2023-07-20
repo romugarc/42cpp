@@ -24,6 +24,13 @@ int	error_handler(int argc, char **argv)
 	return (0);
 }
 
+int	error_notexist(std::ifstream &ifs, std::string filename)
+{
+	ifs.close();
+	std::cout << "File " << filename << " does not exit" << std::endl;
+	return (1);
+}
+
 int	error_fstream(std::ifstream &ifs, std::ofstream &ofs, std::string filename)
 {
 	ifs.close();

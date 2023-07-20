@@ -4,7 +4,7 @@ int	main(void)
 {
 	int	n;
 
-	n = 69;
+	n = 4;
 	Zombie* newz = zombieHorde(n, "HakunaMatata");
 	if (newz)
 	{

@@ -1,6 +1,7 @@
 #include "HumanB.hpp"
 
 HumanB::HumanB(std::string name) : _name(name) {
+	_weap = NULL;
 }
 
 HumanB::~HumanB() {
@@ -15,5 +16,8 @@ void	HumanB::setWeapon(Weapon &weap) {
 }
 
 void	HumanB::attack(void) const {
-	std::cout << this->_name << " attacks with their " << this->_weap->getType() << std::endl;
+	if (!_weap)
+		std::cout << this->_name << " has no weapon and can't attack " << std::endl;
+	else
+		std::cout << this->_name << " attacks with their " << this->_weap->getType() << std::endl;
 }

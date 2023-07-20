@@ -11,7 +11,7 @@ HEADER_FILES	=	Zombie.hpp	\
 CC		=	c++
 RM		=	rm -f
 
-CFLAGS	=	-Wall -Wextra -Werror -std=c++98
+CFLAGS	=	-Wall -Wextra -Werror -std=c++98 -fsanitize=address
 
 all:		${NAME}
 
