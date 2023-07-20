@@ -25,7 +25,7 @@ Fixed	&Fixed::operator=( Fixed const &rhs) {
 }
 
 std::ostream	&operator<<(  std::ostream &o, Fixed const &src ) {
-	o << ((float)src.getRawBits() / (float)(1 << 8));
+	o << src.toFloat();
 	return o;
 }
 
@@ -110,7 +110,7 @@ void	Fixed::setRawBits( int const raw ) {
 }
 
 float	Fixed::toFloat( void ) const {
-	return ((float)this->_nb / (float)(1 << 8));
+	return ((float)this->_nb / (float)(1 << this->_bits));
 }
 
 int		Fixed::toInt( void ) const {
