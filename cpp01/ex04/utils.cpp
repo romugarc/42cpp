@@ -27,7 +27,7 @@ int	error_handler(int argc, char **argv)
 int	error_notexist(std::ifstream &ifs, std::string filename)
 {
 	ifs.close();
-	std::cout << "File " << filename << " does not exit" << std::endl;
+	std::cout << "File " << filename << " can't be opened" << std::endl;
 	return (1);
 }
 
