@@ -5,6 +5,7 @@ int main( void )
 	Fixed a;
 	Fixed const b( Fixed( 5.05f ) * Fixed( 2 ) );
 
+    std::cout << std::endl;
 	std::cout << a << std::endl;
 	std::cout << ++a << std::endl;
 	std::cout << a << std::endl;
@@ -16,7 +17,8 @@ int main( void )
 	std::cout << Fixed::max( a, b ) << std::endl;
 
 	//Tests supplémentaires
-	/*std::cout << "////////////////////////////////////////////////////////////////" << std::endl;
+	Fixed a;
+    /*std::cout << "////////////////////////////////////////////////////////////////" << std::endl;
     std::cout << " Tests arithm :" << std::endl;
     std::cout << "/////////////////" << std::endl << std::endl;
 

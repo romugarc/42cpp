@@ -77,7 +77,7 @@ Fixed	Fixed::operator/( Fixed const &rhs ) {
 
 //Incrémentation
 Fixed	&Fixed::operator++( void ) {
-	this->_nb = this->_nb + 1.0f;
+	this->_nb = this->_nb + 1;
 	return *this;
 }
 
@@ -89,7 +89,7 @@ Fixed	Fixed::operator++( int ) {
 }
 
 Fixed	&Fixed::operator--( void ) {
-	this->_nb = this->_nb - 1.0f;
+	this->_nb = this->_nb - 1;
 	return *this;
 }
 
