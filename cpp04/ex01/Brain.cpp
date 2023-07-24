@@ -1,7 +1,14 @@
 #include "Brain.hpp"
 
 Brain::Brain( void ) {
+	unsigned int	i;
 	std::cout << "Brain default constructor called" << std::endl;
+	i = 0;
+	while (i < 100)
+	{
+		this->setIdeas(i, "");
+		i++;
+	}
 	return;
 }
 

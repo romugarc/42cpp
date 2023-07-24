@@ -2,10 +2,13 @@
 # define DOG_HPP
 
 # include "Animal.hpp"
+# include "Brain.hpp"
 # include <iostream>
 
 class Dog : public Animal
 {
+	private:
+		Brain	*_brain;
 	public:
 		Dog( void );
 		Dog( Dog const &src );
@@ -14,6 +17,7 @@ class Dog : public Animal
 		Dog	&operator=( Dog const &rhs );
 
 		virtual void	makeSound() const;
+		Brain	*getBrain( void ) const;
 };
 
 #endif

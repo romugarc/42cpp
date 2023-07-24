@@ -1,11 +1,14 @@
 #ifndef WRONGCAT_HPP
 # define WRONGCAT_HPP
 
-#include "WrongAnimal.hpp"
-#include <iostream>
+# include "WrongAnimal.hpp"
+# include "Brain.hpp"
+# include <iostream>
 
 class WrongCat : public WrongAnimal
 {
+	private:
+		Brain	*_brain;
 	public:
 		WrongCat( void );
 		WrongCat( WrongCat const &src );
@@ -14,6 +17,7 @@ class WrongCat : public WrongAnimal
 		WrongCat	&operator=( WrongCat const &rhs );
 
 		virtual void	makeSound() const;
+		Brain	*getBrain( void ) const;
 };
 
 #endif
