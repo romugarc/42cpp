@@ -15,20 +15,20 @@
 
 # include <iostream>
 
-class WrongAnimal
+class AWrongAnimal
 {
 	protected:
 		std::string	_type;
 	public:
-		WrongAnimal( void );
-		WrongAnimal( WrongAnimal const &src );
-		virtual ~WrongAnimal( void );
+		AWrongAnimal( void );
+		AWrongAnimal( AWrongAnimal const &src );
+		virtual ~AWrongAnimal( void );
 
-		WrongAnimal	&operator=( WrongAnimal const &rhs );
+		AWrongAnimal	&operator=( AWrongAnimal const &rhs );
 
 		std::string	getType( void ) const;
 
-		virtual void	makeSound() const;
+		virtual void	makeSound() const = 0;
 };
 
 #endif
