@@ -34,12 +34,17 @@ int main()
 
 	const WrongAnimal* wrong = new WrongAnimal();
 	const WrongAnimal* k = new WrongCat();
+	const WrongCat* c = new WrongCat();
 
+	std::cout << wrong->getType() << " " << std::endl;
 	std::cout << k->getType() << " " << std::endl;
-	k->makeSound(); //will output the wrongcat sound!
+	std::cout << c->getType() << " " << std::endl;
+	k->makeSound(); //will output the wronganimal sound!
+	c->makeSound(); //will output the wrongcat sound!
 	wrong->makeSound();
 
 	delete k;
 	delete wrong;
+	delete c;
 	return 0;
 }

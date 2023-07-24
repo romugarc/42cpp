@@ -33,7 +33,7 @@ void	WrongAnimal::makeSound() const {
 
 WrongAnimal	&WrongAnimal::operator=( WrongAnimal const &rhs ) {
 	if (this != &rhs)
-		this->_type = this->getType();
+		this->_type = rhs.getType();
 	return *this;
 }
 

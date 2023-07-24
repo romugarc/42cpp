@@ -33,7 +33,7 @@ void	AAnimal::makeSound() const {
 
 AAnimal	&AAnimal::operator=( AAnimal const &rhs ) {
 	if (this != &rhs)
-		this->_type = this->getType();
+		this->_type = rhs.getType();
 	return *this;
 }
 

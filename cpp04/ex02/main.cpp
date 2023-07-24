@@ -78,41 +78,41 @@ int main()
 		n++;
 	}
 	std::cout << "------------------------" << std::endl;
-	Dog* dogA = new Dog();
-	const Dog* dogB = new Dog(*dogA);
+	Cat* catA = new Cat();
+	const Cat* catB = new Cat(*catA);
 	const Brain	*brainA;
 	const Brain	*brainB;
 
-	*dogA = *dogB;
+	*catA = *catB;
 
-	std::cout << "------------dogA sniff------------" << std::endl;
+	std::cout << "------------catA sniff------------" << std::endl;
 	for (int k = 0; k < 100; k++)
-		dogA->getBrain()->setIdeas(k, "sniff");
+		catA->getBrain()->setIdeas(k, "sniff");
 	for (int k = 0; k < 100; k++)
-		std::cout << dogA->getBrain()->getIdeas(k) << std::endl;
-	std::cout << "------------dogB------------" << std::endl;
+		std::cout << catA->getBrain()->getIdeas(k) << std::endl;
+	std::cout << "------------catB------------" << std::endl;
 	for (int k = 0; k < 100; k++)
-		std::cout << dogB->getBrain()->getIdeas(k) << std::endl;
-	std::cout << "------------dogA snuff------------" << std::endl;
+		std::cout << catB->getBrain()->getIdeas(k) << std::endl;
+	std::cout << "------------catA snuff------------" << std::endl;
 	for (int k = 0; k < 100; k++)
-		dogA->getBrain()->setIdeas(k, "snuff");
+		catA->getBrain()->setIdeas(k, "snuff");
 	for (int k = 0; k < 100; k++)
-		std::cout << dogA->getBrain()->getIdeas(k) << std::endl;
-	std::cout << "------------dogB------------" << std::endl;
+		std::cout << catA->getBrain()->getIdeas(k) << std::endl;
+	std::cout << "------------catB------------" << std::endl;
 	for (int k = 0; k < 100; k++)
-		std::cout << dogB->getBrain()->getIdeas(k) << std::endl;
+		std::cout << catB->getBrain()->getIdeas(k) << std::endl;
 	std::cout << "------------brain tests------------" << std::endl;
-	brainA = dogA->getBrain();
-	brainB = dogB->getBrain();
+	brainA = catA->getBrain();
+	brainB = catB->getBrain();
 	std::cout << brainA << std::endl << brainB << std::endl;
-	std::cout << dogA->getBrain()->getIdeas(42) << std::endl;
-	std::cout << dogB->getBrain()->getIdeas(42) << std::endl;
+	std::cout << catA->getBrain()->getIdeas(42) << std::endl;
+	std::cout << catB->getBrain()->getIdeas(42) << std::endl;
 	std::cout << brainB->getIdeas(42) << std::endl;
 	std::cout << brainA->getIdeas(42) << std::endl;
 
 	std::cout << "------------------------" << std::endl;
-	delete dogA;
-	delete dogB;
+	delete catA;
+	delete catB;
 
 	return 0;
 }

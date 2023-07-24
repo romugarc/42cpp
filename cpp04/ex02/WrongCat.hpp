@@ -28,7 +28,7 @@ class WrongCat : public AWrongAnimal
 
 		WrongCat	&operator=( WrongCat const &rhs );
 
-		virtual void	makeSound() const;
+		void	makeSound() const;
 		Brain	*getBrain( void ) const;
 };
 

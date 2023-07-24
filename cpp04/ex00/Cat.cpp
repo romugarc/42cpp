@@ -31,7 +31,7 @@ void	Cat::makeSound() const {
 
 Cat	&Cat::operator=( Cat const &rhs ) {
 	if (this != &rhs)
-		this->_type = this->getType();
+		this->_type = rhs.getType();
 	return *this;
 }
 

@@ -31,7 +31,7 @@ void	Dog::makeSound() const {
 
 Dog	&Dog::operator=( Dog const &rhs ) {
 	if (this != &rhs)
-		this->_type = this->getType();
+		this->_type = rhs.getType();
 	return *this;
 }
 

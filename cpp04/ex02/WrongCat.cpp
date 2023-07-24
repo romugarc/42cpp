@@ -38,7 +38,7 @@ Brain	*WrongCat::getBrain( void ) const {
 WrongCat	&WrongCat::operator=( WrongCat const &rhs ) {
 	if (this != &rhs)
 	{
-		this->_type = this->getType();
+		this->_type = rhs.getType();
 		for (int i = 0; i < 100; i++)
 			this->_brain->setIdeas(i, rhs.getBrain()->getIdeas(i));
 	}
