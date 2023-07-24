@@ -31,5 +31,6 @@ WrongCat	&WrongCat::operator=( WrongCat const &rhs ) {
 
 WrongCat::~WrongCat( void ) {
 	std::cout << "WrongCat destructor called" << std::endl;
+	delete this->_brain;
 	return;
 }

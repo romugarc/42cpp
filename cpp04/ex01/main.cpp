@@ -31,26 +31,10 @@ int main()
 	delete k;
 	delete wrong;*/
 
-	Dog	*D1 = new Dog();
-	const Dog	*D2 = new Dog(*D1);
-	const Animal	*C = new Cat();
-	const Brain	*tmpB;
-	const Brain	*tmpA;
-
-	*D1 = *D2;
-
-	std::cout << "------------------------" << std::endl;
-	D2->getBrain()->setIdeas(42, "salut");
-	tmpA = D1->getBrain();
-	tmpB = D2->getBrain();
-	std::cout << tmpA << std::endl << tmpB << std::endl;
-	std::cout << tmpB->getIdeas(42) << std::endl;
-	std::cout << tmpA->getIdeas(42) << std::endl;
-
-	std::cout << "------------------------" << std::endl;
-	delete D1;
-	delete D2;
-	delete C;
+	const Animal* j = new Dog();
+	const Animal* i = new Cat();
+	delete j;//should not create a leak
+	delete i;
 
 	return 0;
 }
