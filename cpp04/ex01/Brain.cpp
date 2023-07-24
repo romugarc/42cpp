@@ -53,11 +53,7 @@ void	Brain::setIdeas( unsigned int n, std::string idea ) {
 		std::cout << "Index value must be from 0 to 99" << std::endl;
 		return;
 	}
-	while (n < 100)
-	{
-		this->_ideas[n] = idea;
-		n++;
-	}
+	this->_ideas[n] = idea;
 	return;
 }
 
