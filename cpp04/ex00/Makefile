@@ -4,17 +4,21 @@ SRCS	=	main.cpp		\
 			Animal.cpp		\
 			Dog.cpp			\
 			Cat.cpp			\
+			WrongAnimal.cpp	\
+			WrongCat.cpp	\
 
 OBJS	=	${SRCS:.cpp=.o}
 
-HEADER_FILES	=	Animal.hpp	\
-					Dog.cpp		\
-					Cat.cpp		\
+HEADER_FILES	=	Animal.hpp		\
+					Dog.hpp			\
+					Cat.hpp			\
+					WrongAnimal.hpp	\
+					WrongCat.hpp	\
 
 CC		=	c++
 RM		=	rm -f
 
-CFLAGS	=	-Wall -Wextra -Werror -std=c++98
+CFLAGS	=	-Wall -Wextra -Werror -std=c++98 -fsanitize=address
 
 all:		${NAME}
 
