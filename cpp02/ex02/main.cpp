@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rgarcia <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/24 08:27:45 by rgarcia           #+#    #+#             */
+/*   Updated: 2023/07/24 08:27:47 by rgarcia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Fixed.hpp"
 
 int main( void ) 
@@ -70,48 +82,48 @@ int main( void )
     std::cout << " Tests increment & decrement" << std::endl;
     std::cout << "------------------------------------------------------" << std::endl;
 
-    Fixed w;
+    Fixed g;
     a = Fixed(21.21f);
     std::cout << "a = " << a << std::endl;
 
-    std::cout << "Test : w = ++a" << std::endl;
-    w = ++a;
+    std::cout << "Test : g = ++a" << std::endl;
+    g = ++a;
     std::cout << "a = "<< a << std::endl;
 
-    std::cout << "Test : w = a++" << std::endl;
-    w = a++;
-    std::cout << "w = "<< w << std::endl;
+    std::cout << "Test : g = a++" << std::endl;
+    g = a++;
+    std::cout << "g = "<< g << std::endl;
     std::cout << "a = "<< a << std::endl;
 
     std::cout << "a = " << a << std::endl;
 
-    std::cout << "Test : w = --a" << std::endl;
-    w = --a;
-    std::cout << "w = "<< w << std::endl;
+    std::cout << "Test : g = --a" << std::endl;
+    g = --a;
+    std::cout << "g = "<< g << std::endl;
     std::cout << "a = "<< a << std::endl;
 
-    std::cout << "Test : w = a--" << std::endl;
-    w = a--;
-    std::cout << "w = "<< w << std::endl;
+    std::cout << "Test : g = a--" << std::endl;
+    g = a--;
+    std::cout << "g = "<< g << std::endl;
     std::cout << "a = "<< a << std::endl;
 
     std::cout << " Test min() max() functions:" << std::endl;
     std::cout << "--------------------------------" << std::endl;
 
     Fixed const a_c(a);
-    Fixed const w_c(w);
+    Fixed const g_c(g);
     a = Fixed(21.21f);
 
     std::cout << "a = " << a << std::endl;
-    std::cout << "w = " << w << std::endl << std::endl;
+    std::cout << "g = " << g << std::endl << std::endl;
     std::cout << "(constant a) a_c = " << a_c << std::endl;
-    std::cout << "(constant w) w_c = " << w_c << std::endl;
+    std::cout << "(constant g) g_c = " << g_c << std::endl;
 
-    std::cout << "a.min(a, w) = " << a.min(a, w) << std::endl;
-    std::cout << "a.min(a_c,w_c) = " << a.min(a_c,w_c) << std::endl;
+    std::cout << "a.min(a, g) = " << a.min(a, g) << std::endl;
+    std::cout << "a.min(a_c,g_c) = " << a.min(a_c,g_c) << std::endl;
 
-    std::cout << "a.max(a, w) = " << a.max(a, w) << std::endl;
-    std::cout << "a.max(a_c,w_c) = " << a.max(a_c,w_c) << std::endl;
+    std::cout << "a.max(a, g) = " << a.max(a, g) << std::endl;
+    std::cout << "a.max(a_c,g_c) = " << a.max(a_c,g_c) << std::endl;
     }
 	return 0;
 }
