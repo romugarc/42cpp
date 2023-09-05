@@ -7,10 +7,6 @@ Bureaucrat::Bureaucrat( void ) : _name("Undefined"), _grade(150) {
 
 Bureaucrat::Bureaucrat( Bureaucrat const &src ) : _name(src.getName()), _grade(src.getGrade()) {
 	std::cout << "Bureaucrat Copy constructor called" << std::endl;
-	if (this->_grade < 1)
-		throw Bureaucrat::GradeTooHighException();
-	if (this->_grade > 150)
-		throw Bureaucrat::GradeTooLowException();
 	return;
 }
 
