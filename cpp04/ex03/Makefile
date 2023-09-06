@@ -6,17 +6,18 @@
 #    By: warnora <warnora@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/24 09:27:10 by rgarcia           #+#    #+#              #
-#    Updated: 2023/09/04 15:44:27 by warnora          ###   ########.fr        #
+#    Updated: 2023/09/06 04:50:33 by warnora          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= materia
 
-SRCS	=	main.cpp		\
-			AMateria.cpp	\
-			Character.cpp	\
-			Cure.cpp		\
-			Ice.cpp			\
+SRCS	=	main.cpp			\
+			AMateria.cpp		\
+			Character.cpp		\
+			MateriaSource.cpp	\
+			Cure.cpp			\
+			Ice.cpp				\
 
 OBJS	=	${SRCS:.cpp=.o}
 

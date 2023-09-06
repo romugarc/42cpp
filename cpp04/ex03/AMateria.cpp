@@ -30,7 +30,6 @@ AMateria	&AMateria::operator=( AMateria const &rhs ) {
 }
 
 AMateria::~AMateria( void ) {
-
 	std::cout << "AMateria destructor called" << std::endl;
 	return;
 }

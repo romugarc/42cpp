@@ -1,14 +1,14 @@
 #include "Ice.hpp"
 
-Ice::Ice( void ) {
+Ice::Ice( void ) : AMateria() {
 	std::cout << "ice default constructor called" << std::endl;
 	this->_type = "ice";
 	return;
 }
 
-Ice::Ice( const Ice &src ) {
+Ice::Ice( Ice const &src ) : AMateria(src) {
 	std::cout << "ice copy constructor called" << std::endl;
-	this->_type = src.getType();
+	this->_type = "ice";
 	return;
 }
 
@@ -19,7 +19,6 @@ Ice	&Ice::operator=( Ice const &rhs ) {
 }
 
 AMateria	*Ice::clone( void ) const {
-
 	AMateria	*clone = new Ice(*this);
 	return clone;
 }

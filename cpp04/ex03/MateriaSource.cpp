@@ -2,66 +2,84 @@
 
 MateriaSource::MateriaSource( void ) {
 	std::cout << "MateriaSource default constructor called" << std::endl;
-	for (int i = 0; i < 4; i++)
+	int	i = 0;
+	while (i < 4)
 	{
 		this->_inventory[i] = 0;
+		i++;
 	}
 	return;
 }
 
 MateriaSource::MateriaSource( const MateriaSource &src ) {
-	//AMateria*	clone;
 	std::cout << "MateriaSource copy constructor called" << std::endl;
-	for (int i = 0; i < 4; i++)
+	int	i = 0;
+	while (i < 4)
 	{
-		//clone = NULL;
 		if (src._inventory[i])
 		{
-			//clone = src._inventory[i]->clone();
-			//this->_inventory[i] = clone;
-			this->_inventory[i] = src._inventory[i];
+			//delete this->_inventory[i];
+			this->_inventory[i] = src._inventory[i]->clone();
 		}
 		else
 			this->_inventory[i] = 0;
-		//delete clone;
+		i++;
 	}
 	return;
 }
 
 MateriaSource &MateriaSource::operator=( MateriaSource const &rhs ) {
-	if ( this != &rhs )
+	if (this != &rhs)
 	{
-		for (int i = 0; i < 4; i++)
-			this->_inventory[i] = rhs._inventory[i];
+		int	i = 0;
+		while (i < 4)
+		{
+			delete this->_inventory[i];
+			if (rhs._inventory[i])
+				this->_inventory[i] = rhs._inventory[i]->clone();
+			else
+				this->_inventory[i] = 0;
+			i++;
+		}
 	}
 	return *this;
 }
 
+AMateria	*MateriaSource::getInventory( int i ) const {
+	if (i >= 0 && i < 4 && this->_inventory[i])
+		return this->_inventory[i];
+	return NULL;
+}
+
+
 void	MateriaSource::learnMateria( AMateria *mat ) {
 	if (mat)
 	{
-		for (int i = 0; i < 4; i++)
+		int	i = 0;
+		while (i < 4)
 		{
-			if (!_inventory[i])
+			if (_inventory[i] == 0)
 			{
 				_inventory[i] = mat;
-				std::cout << "the MateriaSource has learn : " << mat->getType() << " in slot : " << i << std::endl;
+				std::cout << "MateriaSource has learned to create " << mat->getType() << " in slot : " << i << std::endl;
 				return;
 			}
+			i++;
 		}
-		std::cout << "the MateriaSource was unable to equip : " << mat->getType() << " because its inventory was full" << std::endl;
 	}
 	return;
 }
 
 AMateria	*MateriaSource::createMateria( const std::string &type ) {
-	for (int i = 0; i < 4; i++)
+	int	i = 0;
+	while (i < 4)
 	{
-		if (this->getInventory(i) && !type.compare(this->getInventory(i)->getType()))
+		if (this->getInventory(i) && type.compare(this->getInventory(i)->getType()) == 0)
 		{
 			std::cout << "found a materia matching : " << type << " in slot : " << i << std::endl;
 			return (this->getInventory(i)->clone());
 		}
+		i++;
 	}
 	std::cout << "couldn't found a materia matching : " << type << std::endl;
 	return (NULL);
@@ -69,5 +87,11 @@ AMateria	*MateriaSource::createMateria( const std::string &type ) {
 
 MateriaSource::~MateriaSource() {
 	std::cout << "MateriaSource destructor called" << std::endl;
+	int	i = 0;
+	while (i < 4)
+	{
+		delete this->_inventory[i];
+		i++;
+	}
 	return;
 }

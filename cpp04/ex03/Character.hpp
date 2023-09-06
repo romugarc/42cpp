@@ -19,13 +19,13 @@ class Character : public ICharacter
 		Character( std::string name );
 		~Character();
 
-		Character	&operator=( Character const & rhs );
+		Character	&operator=( Character const &rhs );
 
 		std::string const	&getName( void ) const;
 		AMateria			*getInventory( int i ) const;
 		int					getFloorsize( void ) const;
 
-		virtual void equip( AMateria *m );
+		virtual void equip( AMateria *mat );
 		virtual void unequip( int idx );
 		virtual void use( int idx, ICharacter &target );
 };
