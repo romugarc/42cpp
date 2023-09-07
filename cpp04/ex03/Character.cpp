@@ -3,30 +3,29 @@
 Character::Character() : _name("No-name"), _floorsize(0) {
 	std::cout << "Character default constructor called" << std::endl;
 	for (int i = 0; i < 4; i++)
-		_inventory[i] = 0;
-	this->_floor = new long[0];
+		_inventory[i] = NULL;
+	this->_floor = new long[1];
+	this->_floor[0] = NULL;
 	return;
 }
 
-Character::Character( const Character &src ) : _name(src.getName()), _floorsize(src.getFloorsize()) {
+Character::Character( Character const &src ) : _name(src.getName()), _floorsize(src.getFloorsize()) {
 	std::cout << " Character copy constructor called" << std::endl;
 	for (int i = 0; i < 4; i++)
-	{
-		delete this->_inventory[i];
-		if (src._inventory[i])
-			_inventory[i] = src._inventory[i]->clone();
-		else
-			_inventory[i] = 0;
-	}
+		_inventory[i] = NULL;
 	this->_floor = new long[_floorsize];
+	for (int i = 0; i < _floorsize; i++)
+		this->_floor[i] = NULL;
+	*this = src;
 	return;
 }
 
 Character::Character( const std::string name ) : _name(name), _floorsize(0) {
 	std::cout << "Character type constructor called" << std::endl;
 	for (int i = 0; i < 4; i++)
-		_inventory[i] = 0;
-	this->_floor = new long[0];
+		this->_inventory[i] = NULL;
+	this->_floor = new long[1];
+	this->_floor[0] = NULL;
 	return;
 }
 
@@ -42,7 +41,7 @@ Character	&Character::operator=( Character const &rhs ) {
 			if (rhs._inventory[i])
 				this->_inventory[i] = rhs._inventory[i]->clone();
 			else
-				this->_inventory[i] = 0;
+				this->_inventory[i] = NULL;
 			i++;
 		}
 	}
@@ -69,15 +68,14 @@ void	Character::equip( AMateria *mat ) {
 		int	i = 0;
 		while (i < 4)
 		{
-			if (_inventory[i] == 0)
+			if (this->_inventory[i] == NULL)
 			{
-				_inventory[i] = mat;
+				this->_inventory[i] = mat->clone();
 				std::cout << this->getName() << " equips " << mat->getType() << " materia in slot: " << i << std::endl;
 				return;
 			}
 			i++;
 		}
-		delete mat;
 	}
 	return;
 }
@@ -93,16 +91,16 @@ void 	Character::unequip(int idx) {
 	{
 		int	i = 0;
 		long *newfloor = new long[this->_floorsize + 1];
-		while (i < this->_floorsize - 1)
+		while (i < this->_floorsize)
 		{
 			newfloor[i] = this->_floor[i];
 			i++;
 		}
-		delete this->_floor;
+		newfloor[i] = long(this->_inventory[idx]);
+		this->_inventory[idx] = NULL;
+		delete [] this->_floor;
 		this->_floorsize += 1;
-		this->_floor[i] = long(this->_inventory[idx]);
-		this->_inventory[idx] = 0;
-		std::cout << this->getName() << " unequips " << _inventory[idx]->getType() << " materia in slot : " << idx << std::endl;
+		this->_floor = newfloor;
 	}
 	return;
 }
@@ -112,15 +110,19 @@ Character::~Character() {
 	int	i = 0;
 	while (i < 4)
 	{
-		delete this->_inventory[i];
+		if (this->_inventory[i] != NULL)
+			delete this->_inventory[i];
 		i++;
 	}
 	i = 0;
-	while (i < this->_floorsize - 1)
+	while (i < this->_floorsize)
 	{
 		if (this->_floor[i])
-			std::cout << "floor slot : " << i << " contain : -" << ((AMateria*)(_floor[i]))->getType() << "-";
-		delete (AMateria*)this->_floor[i];
+		{	
+			std::cout << "floor slot : " << i << " contain : -" << ((AMateria*)(this->_floor[i]))->getType() << "-";
+			delete (AMateria*)this->_floor[i];
+		}
+		i++;
 	}
 	delete [] this->_floor;
 	return;

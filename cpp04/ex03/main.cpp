@@ -9,7 +9,7 @@
 int main()
 {
 		//test sur les materias
-	std::cout << std::endl << "-----------------MATERIA TEST :---------------" << std::endl << std::endl;
+	/*std::cout << std::endl << "-----------------MATERIA TEST :---------------" << std::endl << std::endl;
 
 	std::cout << std::endl << "-----------------ICE CREATION AND ASSIGNATION :---------------" << std::endl << std::endl;
 	Ice ice1 = Ice();
@@ -80,7 +80,7 @@ int main()
 	delete copyice3;
 	delete copycure1;
 	delete copycure2;
-	delete copycure3;
+	delete copycure3;*/
 
 
 
@@ -101,7 +101,7 @@ int main()
 
 	//test sur materia source
 	
-	/* std::cout << std::endl << "-----------------MATERIA SOURCE TEST :---------------" << std::endl << std::endl;
+	/*td::cout << std::endl << "-----------------MATERIA SOURCE TEST :---------------" << std::endl << std::endl;
 
 	std::cout << std::endl << "-----------------CREATION MATERIA SOURCE :---------------" << std::endl << std::endl;
 	MateriaSource*	src1 = new MateriaSource();
@@ -142,9 +142,12 @@ int main()
 	std::cout << std::endl << "-----------------DISPLAY MATERIA SOURCE CONTENT :---------------" << std::endl << std::endl;
 	for (int i = 0; i < 4; i++)
 	{
-		std::cout << *src1->getInventory(i) << std::endl;
-		std::cout << *src2->getInventory(i) << std::endl;
-		std::cout << *src3->getInventory(i) << std::endl;
+		if (src1->getInventory(i) != NULL)
+			std::cout << "1 " << src1->getInventory(i)->getType() << std::endl;
+		if (src2->getInventory(i) != NULL)
+			std::cout << "2 " << src2->getInventory(i)->getType() << std::endl;
+		if (src3->getInventory(i) != NULL)
+			std::cout << "3 " << src3->getInventory(i)->getType() << std::endl;
 	}
 
 	std::cout << std::endl << "-----------------FUNCTION CREATE TEST :---------------" << std::endl << std::endl;
@@ -193,9 +196,14 @@ int main()
 	delete tmp;
 
 	std::cout << "-----------------CLEAN UP---------------" << std::endl;
-	for(int i = 0; i < 4; i++)
+	for (int i = 0; i < 4; i++)
 	{
-		std::cout << src1->getInventory(i) << std::endl;
+		if (src1->getInventory(i) != NULL)
+			std::cout << "1 " << src1->getInventory(i)->getType() << " " << src1->getInventory(i) << std::endl;
+		if (src2->getInventory(i) != NULL)
+			std::cout << "2 " << src2->getInventory(i)->getType() << " " << src2->getInventory(i) << std::endl;
+		if (src3->getInventory(i) != NULL)
+			std::cout << "3 " << src3->getInventory(i)->getType() << " " << src3->getInventory(i) << std::endl;
 	}
 	delete src1;
 	delete src2;
@@ -243,44 +251,73 @@ int main()
 	src->learnMateria(cure);
 	
 	std::cout << std::endl << "-----------------DISPLAY MATERIA SOURCE :---------------" << std::endl << std::endl;
-	std::cout << *src << std::endl;
+	for (int i = 0; i < 4; i++)
+	{
+		if (src->getInventory(i) != NULL)
+			std::cout << "1 " << src->getInventory(i)->getType() << std::endl;
+	}
 
 	std::cout << std::endl << "-----------------DISPLAY CHARACTER :---------------" << std::endl << std::endl;
-	std::cout << character1 << std::endl;
-	std::cout << character2 << std::endl;
-	std::cout << character3 << std::endl;
+	for (int i = 0; i < 4; i++)
+	{
+		if (character1.getInventory(i) != NULL)
+			std::cout << character1.getName() << character1.getInventory(i)->getType() << std::endl;
+		if (character2.getInventory(i) != NULL)
+			std::cout << character2.getName() << character2.getInventory(i)->getType() << std::endl;
+		if (character3.getInventory(i) != NULL)
+			std::cout << character3.getName() << character3.getInventory(i)->getType() << std::endl;
+	}
 	
 	std::cout << std::endl << "-----------------EQUIPE TEST :---------------" << std::endl << std::endl;
 	AMateria*	tmp;
 
 	tmp = src->createMateria("ice");
-	character1.equip(tmp);
+	if (tmp)
+		character1.equip(tmp);
+	delete(tmp);
 	tmp = src->createMateria("ice");
-	character1.equip(tmp);
+	if (tmp)
+		character1.equip(tmp);
+	delete (tmp);
 
 	std::cout << std::endl << "-----------------COPY CONSTRUCTOR TEST :---------------" << std::endl << std::endl;
 	Character	character4 = Character(character1);
 
 	std::cout << std::endl << "-----------------EQUIP TEST :---------------" << std::endl << std::endl;
 	tmp = src->createMateria("cure");
-	character1.equip(tmp);
+	if (tmp)
+		character1.equip(tmp);
+	delete (tmp);
 	tmp = src->createMateria("Cce");
-	character1.equip(tmp);
+	if (tmp)
+		character1.equip(tmp);
+	delete (tmp);
 
 	std::cout << std::endl << "-----------------ASSIGNATION TEST :---------------" << std::endl << std::endl;
 	character3 = character1;
 
 	std::cout << std::endl << "-----------------EQUIP TEST :---------------" << std::endl << std::endl;
 	tmp = src->createMateria("cure");
-	character1.equip(tmp);
+	if (tmp)
+		character1.equip(tmp);
+	delete tmp;
 	tmp = src->createMateria("ice");
-	character3.equip(tmp);
+	if (tmp)
+		character3.equip(tmp);
+	delete tmp;
 	
 	std::cout << std::endl << "-----------------DISPLAY CHARACTER :---------------" << std::endl << std::endl;
-	std::cout << character1 << std::endl;
-	std::cout << character2 << std::endl;
-	std::cout << character3 << std::endl;
-	std::cout << character4 << std::endl;
+	for (int i = 0; i < 4; i++)
+	{
+		if (character1.getInventory(i) != NULL)
+			std::cout << character1.getName() << character1.getInventory(i)->getType() << std::endl;
+		if (character2.getInventory(i) != NULL)
+			std::cout << character2.getName() << character2.getInventory(i)->getType() << std::endl;
+		if (character3.getInventory(i) != NULL)
+			std::cout << character3.getName() << character3.getInventory(i)->getType() << std::endl;
+		if (character4.getInventory(i) != NULL)
+			std::cout << character4.getName() << character4.getInventory(i)->getType() << std::endl;
+	}
 
 	std::cout << std::endl << "-----------------USE TEST :---------------" << std::endl << std::endl;
 
@@ -317,10 +354,17 @@ int main()
 	character4.use(-1, character2);
 
 	std::cout << std::endl << "-----------------DISPLAY CHARACTER :---------------" << std::endl << std::endl;
-	std::cout << character1 << std::endl;
-	std::cout << character2 << std::endl;
-	std::cout << character3 << std::endl;
-	std::cout << character4 << std::endl;
+	for (int i = 0; i < 4; i++)
+	{
+		if (character1.getInventory(i) != NULL)
+			std::cout << character1.getName() << character1.getInventory(i)->getType() << std::endl;
+		if (character2.getInventory(i) != NULL)
+			std::cout << character2.getName() << character2.getInventory(i)->getType() << std::endl;
+		if (character3.getInventory(i) != NULL)
+			std::cout << character3.getName() << character3.getInventory(i)->getType() << std::endl;
+		if (character4.getInventory(i) != NULL)
+			std::cout << character4.getName() << character4.getInventory(i)->getType() << std::endl;
+	}
 
 	std::cout << std::endl << "-----------------character 1 UNEQUIP TEST :---------------" << std::endl << std::endl;
 	character1.unequip(0);
@@ -356,9 +400,13 @@ int main()
 
 	std::cout << std::endl << "-----------------character 1 ADDITIONAL UNEQUIP TEST :---------------" << std::endl << std::endl;
 	tmp = src->createMateria("ice");
-	character1.equip(tmp);
+	if (tmp)
+		character1.equip(tmp);
+	delete tmp;
 	tmp = src->createMateria("ice");
-	character1.equip(tmp);
+	if (tmp)
+		character1.equip(tmp);
+	delete tmp;
 	character1.unequip(1);
 	character1.unequip(2);
 	character1.unequip(3);
@@ -371,7 +419,32 @@ int main()
 	delete cure;
 
 	std::cout << "-----------------DESTRUCTION CALL---------------" << std::endl;*/
-	/*IMateriaSource* src = new MateriaSource();
+	/*MateriaSource src = MateriaSource();
+	AMateria *ice = new Ice();
+	src.learnMateria(ice);
+	AMateria *cure = new Cure();
+	src.learnMateria(cure);
+	Character* me = new Character("me");
+	me->equip(ice);
+	AMateria* tmp;
+	tmp = src.createMateria("ice");
+	me->equip(tmp);
+	delete tmp;
+	tmp = src.createMateria("cure");
+	me->equip(tmp);
+	delete tmp;
+	ICharacter* bob = new Character("bob");
+	bob->equip(ice);
+	*bob = *me;
+	bob->unequip(0);
+	me->use(0, *bob);
+	me->use(1, *bob);
+	delete bob;
+	delete me;
+	delete ice;
+	delete cure;*/
+
+	IMateriaSource* src = new MateriaSource();
 	src->learnMateria(new Ice());
 	src->learnMateria(new Cure());
 	ICharacter* me = new Character("me");
@@ -385,6 +458,7 @@ int main()
 	me->use(1, *bob);
 	delete bob;
 	delete me;
-	delete src;*/
+	delete src;
+	
 	return 0;
 }

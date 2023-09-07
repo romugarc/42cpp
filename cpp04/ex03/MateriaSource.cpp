@@ -5,7 +5,7 @@ MateriaSource::MateriaSource( void ) {
 	int	i = 0;
 	while (i < 4)
 	{
-		this->_inventory[i] = 0;
+		this->_inventory[i] = NULL;
 		i++;
 	}
 	return;
@@ -13,7 +13,7 @@ MateriaSource::MateriaSource( void ) {
 
 MateriaSource::MateriaSource( const MateriaSource &src ) {
 	std::cout << "MateriaSource copy constructor called" << std::endl;
-	int	i = 0;
+	/*int	i = 0;
 	while (i < 4)
 	{
 		if (src._inventory[i])
@@ -24,7 +24,14 @@ MateriaSource::MateriaSource( const MateriaSource &src ) {
 		else
 			this->_inventory[i] = 0;
 		i++;
+	}*/
+	int	i = 0;
+	while (i < 4)
+	{
+		this->_inventory[i] = NULL;
+		i++;
 	}
+	*this = src;
 	return;
 }
 
@@ -38,7 +45,7 @@ MateriaSource &MateriaSource::operator=( MateriaSource const &rhs ) {
 			if (rhs._inventory[i])
 				this->_inventory[i] = rhs._inventory[i]->clone();
 			else
-				this->_inventory[i] = 0;
+				this->_inventory[i] = NULL;
 			i++;
 		}
 	}
@@ -58,9 +65,9 @@ void	MateriaSource::learnMateria( AMateria *mat ) {
 		int	i = 0;
 		while (i < 4)
 		{
-			if (_inventory[i] == 0)
+			if (this->_inventory[i] == NULL)
 			{
-				_inventory[i] = mat;
+				this->_inventory[i] = mat->clone();
 				std::cout << "MateriaSource has learned to create " << mat->getType() << " in slot : " << i << std::endl;
 				return;
 			}
@@ -87,10 +94,12 @@ AMateria	*MateriaSource::createMateria( const std::string &type ) {
 
 MateriaSource::~MateriaSource() {
 	std::cout << "MateriaSource destructor called" << std::endl;
+	//std::cout << this->getInventory(0)->getType() << std::endl;
 	int	i = 0;
 	while (i < 4)
 	{
-		delete this->_inventory[i];
+		if (this->_inventory[i] != NULL)
+			delete this->_inventory[i];
 		i++;
 	}
 	return;
