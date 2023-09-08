@@ -1,13 +1,13 @@
 #include "Ice.hpp"
 
 Ice::Ice( void ) : AMateria() {
-	std::cout << "ice default constructor called" << std::endl;
+	//std::cout << "ice default constructor called" << std::endl;
 	this->_type = "ice";
 	return;
 }
 
 Ice::Ice( Ice const &src ) : AMateria(src) {
-	std::cout << "ice copy constructor called" << std::endl;
+	//std::cout << "ice copy constructor called" << std::endl;
 	this->_type = "ice";
 	return;
 }
@@ -28,6 +28,6 @@ void	Ice::use( ICharacter &target ) {
 }
 
 Ice::~Ice() {
-	std::cout << "ice destructor called" << std::endl;
+	//std::cout << "ice destructor called" << std::endl;
 	return;
 }

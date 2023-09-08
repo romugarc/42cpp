@@ -1,7 +1,7 @@
 #include "MateriaSource.hpp"
 
 MateriaSource::MateriaSource( void ) {
-	std::cout << "MateriaSource default constructor called" << std::endl;
+	//std::cout << "MateriaSource default constructor called" << std::endl;
 	int	i = 0;
 	while (i < 4)
 	{
@@ -12,19 +12,7 @@ MateriaSource::MateriaSource( void ) {
 }
 
 MateriaSource::MateriaSource( const MateriaSource &src ) {
-	std::cout << "MateriaSource copy constructor called" << std::endl;
-	/*int	i = 0;
-	while (i < 4)
-	{
-		if (src._inventory[i])
-		{
-			//delete this->_inventory[i];
-			this->_inventory[i] = src._inventory[i]->clone();
-		}
-		else
-			this->_inventory[i] = 0;
-		i++;
-	}*/
+	//std::cout << "MateriaSource copy constructor called" << std::endl;
 	int	i = 0;
 	while (i < 4)
 	{
@@ -68,7 +56,7 @@ void	MateriaSource::learnMateria( AMateria *mat ) {
 			if (this->_inventory[i] == NULL)
 			{
 				this->_inventory[i] = mat->clone();
-				std::cout << "MateriaSource has learned to create " << mat->getType() << " in slot : " << i << std::endl;
+				//std::cout << "MateriaSource has learned to create " << mat->getType() << " in slot : " << i << std::endl;
 				return;
 			}
 			i++;
@@ -83,18 +71,17 @@ AMateria	*MateriaSource::createMateria( const std::string &type ) {
 	{
 		if (this->getInventory(i) && type.compare(this->getInventory(i)->getType()) == 0)
 		{
-			std::cout << "found a materia matching : " << type << " in slot : " << i << std::endl;
+			//std::cout << "Found a materia matching : " << type << " in slot : " << i << std::endl;
 			return (this->getInventory(i)->clone());
 		}
 		i++;
 	}
-	std::cout << "couldn't found a materia matching : " << type << std::endl;
+	//std::cout << "Couldn't find a materia matching : " << type << std::endl;
 	return (NULL);
 }
 
 MateriaSource::~MateriaSource() {
-	std::cout << "MateriaSource destructor called" << std::endl;
-	//std::cout << this->getInventory(0)->getType() << std::endl;
+	//std::cout << "MateriaSource destructor called" << std::endl;
 	int	i = 0;
 	while (i < 4)
 	{

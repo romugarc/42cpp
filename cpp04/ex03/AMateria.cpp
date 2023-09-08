@@ -1,17 +1,17 @@
 #include "AMateria.hpp"
 
 AMateria::AMateria( void ) : _type("No-type") {
-	std::cout << "AMateria default constructor called" << std::endl;
+	//std::cout << "AMateria default constructor called" << std::endl;
 	return;
 }
 
 AMateria::AMateria( const AMateria &src ) : _type(src._type) {
-	std::cout << "AMateria copy constructor called" << std::endl;
+	//std::cout << "AMateria copy constructor called" << std::endl;
 	return;
 }
 
 AMateria::AMateria( std::string const &type ) : _type(type) {
-	std::cout << "AMateria type constructor called" << std::endl;
+	//std::cout << "AMateria type constructor called" << std::endl;
 	return;
 }
 
@@ -30,6 +30,6 @@ AMateria	&AMateria::operator=( AMateria const &rhs ) {
 }
 
 AMateria::~AMateria( void ) {
-	std::cout << "AMateria destructor called" << std::endl;
+	//std::cout << "AMateria destructor called" << std::endl;
 	return;
 }

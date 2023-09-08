@@ -1,7 +1,7 @@
 #include "Character.hpp"
 
 Character::Character() : _name("No-name"), _floorsize(0) {
-	std::cout << "Character default constructor called" << std::endl;
+	//std::cout << "Character default constructor called" << std::endl;
 	for (int i = 0; i < 4; i++)
 		_inventory[i] = NULL;
 	this->_floor = new long[1];
@@ -10,7 +10,7 @@ Character::Character() : _name("No-name"), _floorsize(0) {
 }
 
 Character::Character( Character const &src ) : _name(src.getName()), _floorsize(src.getFloorsize()) {
-	std::cout << " Character copy constructor called" << std::endl;
+	//std::cout << " Character copy constructor called" << std::endl;
 	for (int i = 0; i < 4; i++)
 		_inventory[i] = NULL;
 	this->_floor = new long[_floorsize];
@@ -21,7 +21,7 @@ Character::Character( Character const &src ) : _name(src.getName()), _floorsize(
 }
 
 Character::Character( const std::string name ) : _name(name), _floorsize(0) {
-	std::cout << "Character type constructor called" << std::endl;
+	//std::cout << "Character type constructor called" << std::endl;
 	for (int i = 0; i < 4; i++)
 		this->_inventory[i] = NULL;
 	this->_floor = new long[1];
@@ -71,7 +71,7 @@ void	Character::equip( AMateria *mat ) {
 			if (this->_inventory[i] == NULL)
 			{
 				this->_inventory[i] = mat->clone();
-				std::cout << this->getName() << " equips " << mat->getType() << " materia in slot: " << i << std::endl;
+				//std::cout << this->getName() << " equips " << mat->getType() << " materia in slot: " << i << std::endl;
 				return;
 			}
 			i++;
@@ -106,7 +106,7 @@ void 	Character::unequip(int idx) {
 }
 
 Character::~Character() {
-	std::cout << "Character destructor called" << std::endl;
+	//std::cout << "Character destructor called" << std::endl;
 	int	i = 0;
 	while (i < 4)
 	{
@@ -119,7 +119,7 @@ Character::~Character() {
 	{
 		if (this->_floor[i])
 		{	
-			std::cout << "floor slot : " << i << " contain : -" << ((AMateria*)(this->_floor[i]))->getType() << "-";
+			//std::cout << "Floor slot : " << i << " contains : -" << ((AMateria*)(this->_floor[i]))->getType() << "-";
 			delete (AMateria*)this->_floor[i];
 		}
 		i++;
