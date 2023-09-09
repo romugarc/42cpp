@@ -19,7 +19,6 @@ ShrubberyCreationForm::ShrubberyCreationForm( void ) : AForm("ShrubberyCreationF
 
 ShrubberyCreationForm::ShrubberyCreationForm( ShrubberyCreationForm const &src ) : AForm("ShrubberyCreationForm", 145, 137), _target(src.getTarget()) {
 	std::cout << "ShrubberyCreationForm Copy constructor called" << std::endl;
-	setSignedStatus(src.getSignedStatus());
 	return;
 }
 
@@ -29,7 +28,11 @@ ShrubberyCreationForm::ShrubberyCreationForm( std::string const target ) : AForm
 }
 
 ShrubberyCreationForm &ShrubberyCreationForm::operator=( ShrubberyCreationForm const &rhs ) {
-	(void)rhs;
+	if (this != &rhs)
+	{
+		setSignedStatus(rhs.getSignedStatus());
+		this->_target = rhs.getTarget();
+	}
 	return *this;
 }
 

@@ -19,7 +19,6 @@ PresidentialPardonForm::PresidentialPardonForm( void ) : AForm("PresidentialPard
 
 PresidentialPardonForm::PresidentialPardonForm( PresidentialPardonForm const &src ) : AForm("PresidentialPardonForm", 25, 5), _target(src.getTarget()) {
 	std::cout << "PresidentialPardonForm Copy constructor called" << std::endl;
-	setSignedStatus(src.getSignedStatus());
 	return;
 }
 
@@ -29,7 +28,11 @@ PresidentialPardonForm::PresidentialPardonForm( std::string const target ) : AFo
 }
 
 PresidentialPardonForm &PresidentialPardonForm::operator=( PresidentialPardonForm const &rhs ) {
-	(void)rhs;
+	if (this != &rhs)
+	{
+		setSignedStatus(rhs.getSignedStatus());
+		this->_target = rhs.getTarget();
+	}
 	return *this;
 }
 
@@ -39,7 +42,7 @@ std::string const	PresidentialPardonForm::getTarget( void ) const {
 
 void	PresidentialPardonForm::execute( Bureaucrat const &executor ) const {
 	this->CheckExec(executor);
-	std::cout << "Moi, Zaphod Beeblebrox, souverain de la galaxie, vous accorde à vous, " << executor.getName() << " mon pardon." << std::endl;
+	std::cout << "Moi, Zaphod Beeblebrox, souverain de la galaxie, vous accorde à vous, " << this->getTarget() << " mon pardon." << std::endl;
 	return;
 }
 

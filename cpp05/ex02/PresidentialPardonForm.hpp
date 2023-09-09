@@ -20,7 +20,7 @@
 class PresidentialPardonForm : public AForm
 {
 	private:
-		std::string const _target;
+		std::string _target;
 	public:
 		PresidentialPardonForm( void );
 		PresidentialPardonForm( PresidentialPardonForm const &src );

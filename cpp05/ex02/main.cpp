@@ -18,535 +18,206 @@
 
 int	main ( void ) {
 
-	std::cout << std::endl << "---------------BUREAUCRAT CREATION TEST : ----------------" << std::endl << std::endl;
-	Bureaucrat 				B1;
-	
-	std::cout << std::endl << "---------------PRESIDENTIAL PARDON CREATION TEST : ----------------" << std::endl << std::endl;
-	PresidentialPardonForm	PF1(B1.getName());
-	PresidentialPardonForm	PF2("The Evil Chair");
-	PresidentialPardonForm	PF3(PF2);
-	PresidentialPardonForm	PF4;
+	std::cout << std::endl << "--Form Creation :" << std::endl << std::endl;
+	PresidentialPardonForm	P1;
+	PresidentialPardonForm	P2("Martin Criminel");
+	RobotomyRequestForm	R1;
+	RobotomyRequestForm	R2("Hugo Patient");
+	ShrubberyCreationForm S1;
+	ShrubberyCreationForm S2("home");
 
-	std::cout << std::endl << "---------------ROBOTOMY REQUEST CREATION TEST : ----------------" << std::endl << std::endl;
-	RobotomyRequestForm	RF1(B1.getName());
-	RobotomyRequestForm	RF2("The Evil Chair");
-	RobotomyRequestForm	RF3(RF2);
-	RobotomyRequestForm	RF4;
+	std::cout << std::endl << "--Forms :" << std::endl << std::endl;
+	std::cout << P1.getTarget() << std::endl;
+	std::cout << P1 << std::endl;
+	std::cout << P2.getTarget() << std::endl;
+	std::cout << P2 << std::endl;
+	std::cout << R1.getTarget() << std::endl;
+	std::cout << R1 << std::endl;
+	std::cout << R2.getTarget() << std::endl;
+	std::cout << R2 << std::endl;
+	std::cout << S1.getTarget() << std::endl;
+	std::cout << S1 << std::endl;
+	std::cout << S2.getTarget() << std::endl;
+	std::cout << S2 << std::endl;
+	P1 = P2;
+	R1 = R2;
+	S1 = S2;
+	std::cout << std::endl << "--F1 = F2 :" << std::endl << std::endl;
+	std::cout << P1.getTarget() << std::endl;
+	std::cout << P1 << std::endl;
+	std::cout << R1.getTarget() << std::endl;
+	std::cout << R1 << std::endl;
+	std::cout << S1.getTarget() << std::endl;
+	std::cout << S1 << std::endl;
 
-	std::cout << std::endl << "---------------SHRUBBERY CREATION CREATION TEST : ----------------" << std::endl << std::endl;
-	ShrubberyCreationForm	SF1(B1.getName());
-	ShrubberyCreationForm	SF2("The Evil Chair");
-	ShrubberyCreationForm	SF3(SF2);
-	ShrubberyCreationForm	SF4;
+	std::cout << std::endl << "--Bureaucrats :" << std::endl << std::endl;
+	Bureaucrat	B1("Thomas Nouveau", 150);
+	Bureaucrat	B2("Jean Patron", 1);
 
-	std::cout << std::endl << "---------------FORM DISPLAY TEST : ----------------" << std::endl << std::endl;
 	std::cout << B1 << std::endl;
-	std::cout << PF1 << std::endl;
-	std::cout << PF2 << std::endl;
-	std::cout << PF3 << std::endl;
-	std::cout << PF4 << std::endl;
-	std::cout << RF1 << std::endl;
-	std::cout << RF2 << std::endl;
-	std::cout << RF3 << std::endl;
-	std::cout << RF4 << std::endl;
-	std::cout << SF1 << std::endl;
-	std::cout << SF2 << std::endl;
-	std::cout << SF3 << std::endl;
-	std::cout << SF4 << std::endl;
+	std::cout << B2 << std::endl;
 
-	std::cout << std::endl << "---------------ASSIGNATION TEST PF4 = PF1 TEST : ----------------" << std::endl << std::endl;
-	PF4 = PF1;
-	RF4 = RF1;
-	SF4 = SF1;
-
-	std::cout << std::endl << "---------------FORM DISPLAY TEST : ----------------" << std::endl << std::endl;
-	std::cout << B1 << std::endl;
-	std::cout << PF1 << std::endl;
-	std::cout << PF4 << std::endl;
-	std::cout << RF1 << std::endl;
-	std::cout << RF4 << std::endl;
-	std::cout << SF1 << std::endl;
-	std::cout << SF4 << std::endl;
-
-	std::cout << std::endl << "---------------SHRUBBERY CREATION EXECUTION TEST : ----------------" << std::endl << std::endl;
+	std::cout << std::endl << "--Thomas Nouveau tries signing and executing forms :" << std::endl << std::endl;
+	std::cout << std::endl << "--Shrubbery :" << std::endl << std::endl;
 	try
 	{
-		B1.executeForm(SF1);
+		B1.signForm(S1);
 	}
-	catch(const std::exception& e)
+	catch(const AForm::GradeTooLowException &e)
 	{
-		std::cerr << e.what() << '\n';
+		std::cerr << e.what() << std::endl;
 	}
-
-	std::cout << std::endl << "---------------ROBOTOMY REQUEST EXECUTION TEST : ----------------" << std::endl << std::endl;
 	try
 	{
-		B1.executeForm(RF1);
+		B1.executeForm(S1);
 	}
-	catch(const std::exception& e)
+	catch(const AForm::GradeTooLowException &e)
 	{
-		std::cerr << e.what() << '\n';
+		std::cerr << e.what() << std::endl;
 	}
-
-	std::cout << std::endl << "---------------PRESIDENTIAL PARDON EXECUTION TEST : ----------------" << std::endl << std::endl;
+	catch(const AForm::UnsignedFormException &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+	B1.incrGrade(5);
 	try
 	{
-		B1.executeForm(PF1);
+		B1.signForm(S1);
+		B1.executeForm(S1);
 	}
-	catch(const std::exception& e)
+	catch(const AForm::GradeTooLowException &e)
 	{
-		std::cerr << e.what() << '\n';
+		std::cerr << e.what() << std::endl;
 	}
-
-	std::cout << std::endl << "---------------SHRUBBERY CREATION SIGNED TEST : ----------------" << std::endl << std::endl;
+	catch(const AForm::UnsignedFormException &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+	std::cout << std::endl << "--Jean Patron tries to execute the form instead :" << std::endl << std::endl;
 	try
 	{
-		B1.signForm(SF1);
+		B2.executeForm(S1);
 	}
-	catch(const std::exception& e)
+	catch(const AForm::GradeTooLowException &e)
 	{
-		std::cerr << e.what() << '\n';
+		std::cerr << e.what() << std::endl;
+	}
+	catch(const AForm::UnsignedFormException &e)
+	{
+		std::cerr << e.what() << std::endl;
 	}
 
-	std::cout << std::endl << "---------------ROBOTOMY REQUEST SIGNED TEST : ----------------" << std::endl << std::endl;
+	std::cout << std::endl << "--Robotomy :" << std::endl << std::endl;
 	try
 	{
-		B1.signForm(RF1);
+		B1.signForm(R1);
 	}
-	catch(const std::exception& e)
+	catch(const AForm::GradeTooLowException &e)
 	{
-		std::cerr << e.what() << '\n';
+		std::cerr << e.what() << std::endl;
 	}
-
-	std::cout << std::endl << "---------------PRESIDENTIAL PARDON SIGNED TEST : ----------------" << std::endl << std::endl;
 	try
 	{
-		B1.signForm(PF1);
+		B1.executeForm(R1);
 	}
-	catch(const std::exception& e)
+	catch(const AForm::GradeTooLowException &e)
 	{
-		std::cerr << e.what() << '\n';
+		std::cerr << e.what() << std::endl;
 	}
-
-	std::cout << std::endl << "---------------FORM DISPLAY TEST : ----------------" << std::endl << std::endl;
-	std::cout << B1 << std::endl;
-	std::cout << PF1 << std::endl;
-	std::cout << RF1 << std::endl;
-	std::cout << SF1 << std::endl;
-
-	std::cout << std::endl << "---------------PROMOTION TEST : ----------------" << std::endl << std::endl;
-	std::cout << B1 << std::endl;
+	catch(const AForm::UnsignedFormException &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+	B1.incrGrade(73);
 	try
 	{
-		B1.incrGrade(150);
+		B1.signForm(R1);
+		B1.executeForm(R1);
 	}
-	catch(const std::exception& e)
+	catch(const AForm::GradeTooLowException &e)
 	{
-		std::cerr << e.what() << '\n';
+		std::cerr << e.what() << std::endl;
 	}
-	std::cout << B1 << std::endl;
-	B1.incrGrade(10);
-	std::cout << B1 << std::endl;
-	
-	std::cout << std::endl << "---------------FORM DISPLAY TEST : ----------------" << std::endl << std::endl;
-	std::cout << B1 << std::endl;
-	std::cout << PF1 << std::endl;
-	std::cout << RF1 << std::endl;
-	std::cout << SF1 << std::endl;
-
-	std::cout << std::endl << "---------------SHRUBBERY CREATION EXECUTION TEST : ----------------" << std::endl << std::endl;
+	catch(const AForm::UnsignedFormException &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+	std::cout << std::endl << "--Jean Patron tries to execute the form instead :" << std::endl << std::endl;
 	try
 	{
-		B1.executeForm(SF1);
+		B2.executeForm(R1);
 	}
-	catch(const std::exception& e)
+	catch(const AForm::GradeTooLowException &e)
 	{
-		std::cerr << e.what() << '\n';
+		std::cerr << e.what() << std::endl;
+	}
+	catch(const AForm::UnsignedFormException &e)
+	{
+		std::cerr << e.what() << std::endl;
 	}
 
-	std::cout << std::endl << "---------------ROBOTOMY REQUEST EXECUTION TEST : ----------------" << std::endl << std::endl;
+	std::cout << std::endl << "--Presidential :" << std::endl << std::endl;
 	try
 	{
-		B1.executeForm(RF1);
+		B1.signForm(P1);
 	}
-	catch(const std::exception& e)
+	catch(const AForm::GradeTooLowException &e)
 	{
-		std::cerr << e.what() << '\n';
+		std::cerr << e.what() << std::endl;
 	}
-
-	std::cout << std::endl << "---------------PRESIDENTIAL PARDON EXECUTION TEST : ----------------" << std::endl << std::endl;
 	try
 	{
-		B1.executeForm(PF1);
+		B1.executeForm(P1);
 	}
-	catch(const std::exception& e)
+	catch(const AForm::GradeTooLowException &e)
 	{
-		std::cerr << e.what() << '\n';
+		std::cerr << e.what() << std::endl;
 	}
-
-	std::cout << std::endl << "---------------SHRUBBERY CREATION SIGNED TEST : ----------------" << std::endl << std::endl;
+	catch(const AForm::UnsignedFormException &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+	B1.incrGrade(47);
 	try
 	{
-		B1.signForm(SF1);
+		B1.signForm(P1);
+		B1.executeForm(P1);
 	}
-	catch(const std::exception& e)
+	catch(const AForm::GradeTooLowException &e)
 	{
-		std::cerr << e.what() << '\n';
+		std::cerr << e.what() << std::endl;
 	}
-
-	std::cout << std::endl << "---------------ROBOTOMY REQUEST SIGNED TEST : ----------------" << std::endl << std::endl;
+	catch(const AForm::UnsignedFormException &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+	std::cout << std::endl << "--Jean Patron tries to execute the form instead :" << std::endl << std::endl;
 	try
 	{
-		B1.signForm(RF1);
+		B2.executeForm(P1);
 	}
-	catch(const std::exception& e)
+	catch(const AForm::GradeTooLowException &e)
 	{
-		std::cerr << e.what() << '\n';
+		std::cerr << e.what() << std::endl;
+	}
+	catch(const AForm::UnsignedFormException &e)
+	{
+		std::cerr << e.what() << std::endl;
 	}
 
-	std::cout << std::endl << "---------------PRESIDENTIAL PARDON SIGNED TEST : ----------------" << std::endl << std::endl;
-	try
-	{
-		B1.signForm(PF1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-
-	std::cout << std::endl << "---------------FORM DISPLAY TEST : ----------------" << std::endl << std::endl;
-	std::cout << B1 << std::endl;
-	std::cout << PF1 << std::endl;
-	std::cout << RF1 << std::endl;
-	std::cout << SF1 << std::endl;
-
-	std::cout << std::endl << "---------------PROMOTION TEST : ----------------" << std::endl << std::endl;
-	std::cout << B1 << std::endl;
-	try
-	{
-		B1.incrGrade(-1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-	std::cout << B1 << std::endl;
-	B1.incrGrade(7);
-	std::cout << B1 << std::endl;
-	
-	std::cout << std::endl << "---------------FORM DISPLAY TEST : ----------------" << std::endl << std::endl;
-	std::cout << B1 << std::endl;
-	std::cout << PF1 << std::endl;
-	std::cout << RF1 << std::endl;
-	std::cout << SF1 << std::endl;
-
-	std::cout << std::endl << "---------------SHRUBBERY CREATION EXECUTION TEST : ----------------" << std::endl << std::endl;
-	try
-	{
-		B1.executeForm(SF1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-
-	std::cout << std::endl << "---------------ROBOTOMY REQUEST EXECUTION TEST : ----------------" << std::endl << std::endl;
-	try
-	{
-		B1.executeForm(RF1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-
-	std::cout << std::endl << "---------------PRESIDENTIAL PARDON EXECUTION TEST : ----------------" << std::endl << std::endl;
-	try
-	{
-		B1.executeForm(PF1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-
-	std::cout << std::endl << "---------------SHRUBBERY CREATION SIGNED TEST : ----------------" << std::endl << std::endl;
-	try
-	{
-		B1.signForm(SF1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-
-	std::cout << std::endl << "---------------ROBOTOMY REQUEST SIGNED TEST : ----------------" << std::endl << std::endl;
-	try
-	{
-		B1.signForm(RF1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-
-	std::cout << std::endl << "---------------PRESIDENTIAL PARDON SIGNED TEST : ----------------" << std::endl << std::endl;
-	try
-	{
-		B1.signForm(PF1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-
-	std::cout << std::endl << "---------------FORM DISPLAY TEST : ----------------" << std::endl << std::endl;
-	std::cout << B1 << std::endl;
-	std::cout << PF1 << std::endl;
-	std::cout << RF1 << std::endl;
-	std::cout << SF1 << std::endl;
-
-	std::cout << std::endl << "---------------PROMOTION TEST : ----------------" << std::endl << std::endl;
-	std::cout << B1 << std::endl;
-	try
-	{
-		B1.incrGrade(0);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-	std::cout << B1 << std::endl;
-	B1.incrGrade(80);
-	std::cout << B1 << std::endl;
-	
-	std::cout << std::endl << "---------------FORM DISPLAY TEST : ----------------" << std::endl << std::endl;
-	std::cout << B1 << std::endl;
-	std::cout << PF1 << std::endl;
-	std::cout << RF1 << std::endl;
-	std::cout << SF1 << std::endl;
-
-	std::cout << std::endl << "---------------SHRUBBERY CREATION EXECUTION TEST : ----------------" << std::endl << std::endl;
-	try
-	{
-		B1.executeForm(SF1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-
-	std::cout << std::endl << "---------------ROBOTOMY REQUEST EXECUTION TEST : ----------------" << std::endl << std::endl;
-	try
-	{
-		B1.executeForm(RF1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-
-	std::cout << std::endl << "---------------PRESIDENTIAL PARDON EXECUTION TEST : ----------------" << std::endl << std::endl;
-	try
-	{
-		B1.executeForm(PF1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-
-	std::cout << std::endl << "---------------SHRUBBERY CREATION SIGNED TEST : ----------------" << std::endl << std::endl;
-	try
-	{
-		B1.signForm(SF1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-
-	std::cout << std::endl << "---------------ROBOTOMY REQUEST SIGNED TEST : ----------------" << std::endl << std::endl;
-	try
-	{
-		B1.signForm(RF1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-
-	std::cout << std::endl << "---------------PRESIDENTIAL PARDON SIGNED TEST : ----------------" << std::endl << std::endl;
-	try
-	{
-		B1.signForm(PF1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-
-	std::cout << std::endl << "---------------FORM DISPLAY TEST : ----------------" << std::endl << std::endl;
-	std::cout << B1 << std::endl;
-	std::cout << PF1 << std::endl;
-	std::cout << RF1 << std::endl;
-	std::cout << SF1 << std::endl;
-
-	std::cout << std::endl << "---------------PROMOTION TEST : ----------------" << std::endl << std::endl;
-	std::cout << B1 << std::endl;
-	B1.incrGrade(32);
-	std::cout << B1 << std::endl;
-	
-	std::cout << std::endl << "---------------FORM DISPLAY TEST : ----------------" << std::endl << std::endl;
-	std::cout << B1 << std::endl;
-	std::cout << PF1 << std::endl;
-	std::cout << RF1 << std::endl;
-	std::cout << SF1 << std::endl;
-
-	std::cout << std::endl << "---------------SHRUBBERY CREATION EXECUTION TEST : ----------------" << std::endl << std::endl;
-	try
-	{
-		B1.executeForm(SF1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-
-	std::cout << std::endl << "---------------ROBOTOMY REQUEST EXECUTION TEST : ----------------" << std::endl << std::endl;
-	try
-	{
-		B1.executeForm(RF1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-
-	std::cout << std::endl << "---------------PRESIDENTIAL PARDON EXECUTION TEST : ----------------" << std::endl << std::endl;
-	try
-	{
-		B1.executeForm(PF1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-
-	std::cout << std::endl << "---------------SHRUBBERY CREATION SIGNED TEST : ----------------" << std::endl << std::endl;
-	try
-	{
-		B1.signForm(SF1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-
-	std::cout << std::endl << "---------------ROBOTOMY REQUEST SIGNED TEST : ----------------" << std::endl << std::endl;
-	try
-	{
-		B1.signForm(RF1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-
-	std::cout << std::endl << "---------------PRESIDENTIAL PARDON SIGNED TEST : ----------------" << std::endl << std::endl;
-	try
-	{
-		B1.signForm(PF1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-
-	std::cout << std::endl << "---------------FORM DISPLAY TEST : ----------------" << std::endl << std::endl;
-	std::cout << B1 << std::endl;
-	std::cout << PF1 << std::endl;
-	std::cout << RF1 << std::endl;
-	std::cout << SF1 << std::endl;
-
-	std::cout << std::endl << "---------------PROMOTION TEST : ----------------" << std::endl << std::endl;
-	std::cout << B1 << std::endl;
-	B1.incrGrade(20);
-	std::cout << B1 << std::endl;
-	
-	std::cout << std::endl << "---------------FORM DISPLAY TEST : ----------------" << std::endl << std::endl;
-	std::cout << B1 << std::endl;
-	std::cout << PF1 << std::endl;
-	std::cout << RF1 << std::endl;
-	std::cout << SF1 << std::endl;
-
-	std::cout << std::endl << "---------------SHRUBBERY CREATION EXECUTION TEST : ----------------" << std::endl << std::endl;
-	try
-	{
-		B1.executeForm(SF1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-
-	std::cout << std::endl << "---------------ROBOTOMY REQUEST EXECUTION TEST : ----------------" << std::endl << std::endl;
-	try
-	{
-		B1.executeForm(RF1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-
-	std::cout << std::endl << "---------------PRESIDENTIAL PARDON EXECUTION TEST : ----------------" << std::endl << std::endl;
-	try
-	{
-		B1.executeForm(PF1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-
-	std::cout << std::endl << "---------------SHRUBBERY CREATION SIGNED TEST : ----------------" << std::endl << std::endl;
-	try
-	{
-		B1.signForm(SF1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-
-	std::cout << std::endl << "---------------ROBOTOMY REQUEST SIGNED TEST : ----------------" << std::endl << std::endl;
-	try
-	{
-		B1.signForm(RF1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-
-	std::cout << std::endl << "---------------PRESIDENTIAL PARDON SIGNED TEST : ----------------" << std::endl << std::endl;
-	try
-	{
-		B1.signForm(PF1);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-
-	std::cout << std::endl << "---------------FORM DISPLAY TEST : ----------------" << std::endl << std::endl;
-	std::cout << B1 << std::endl;
-	std::cout << PF1 << std::endl;
-	std::cout << RF1 << std::endl;
-	std::cout << SF1 << std::endl;
-
-	std::cout << std::endl << "---------------DESTRUCTION CALL : ----------------" << std::endl << std::endl;
-
+	std::cout << std::endl << "--Forms :" << std::endl << std::endl;
+	std::cout << P1.getTarget() << std::endl;
+	std::cout << P1 << std::endl;
+	std::cout << P2.getTarget() << std::endl;
+	std::cout << P2 << std::endl;
+	std::cout << R1.getTarget() << std::endl;
+	std::cout << R1 << std::endl;
+	std::cout << R2.getTarget() << std::endl;
+	std::cout << R2 << std::endl;
+	std::cout << S1.getTarget() << std::endl;
+	std::cout << S1 << std::endl;
+	std::cout << S2.getTarget() << std::endl;
+	std::cout << S2 << std::endl;
+	std::cout << std::endl << "--Destruction :" << std::endl << std::endl;
 	return (0);
 }
