@@ -17,7 +17,7 @@ Form::Form( void ) : _name("Undefined"), _signed(false), _signgrade(150), _execg
 	return;
 }
 
-Form::Form( Form const &src ) : _name(src.getName()), _signed(src.getSignedStatus()), _signgrade(src.getSignGrade()), _execgrade(src.getExecGrade()) {
+Form::Form( Form const &src ) : _name(src.getName()), _signed(false), _signgrade(src.getSignGrade()), _execgrade(src.getExecGrade()) {
 	std::cout << "Form Copy constructor called" << std::endl;
 	return;
 }
@@ -34,7 +34,10 @@ Form	&Form::operator=( Form const &rhs )
 {
 	if ( this != &rhs )
 	{
+		(std::string&)this->_name = rhs.getName();
 		this->_signed = rhs.getSignedStatus();
+		(int&)this->_signgrade = rhs.getSignGrade();
+		(int&)this->_execgrade = rhs.getExecGrade();
 	}
 	return *this;
 }

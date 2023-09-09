@@ -23,7 +23,7 @@ class Form {
 		std::string const	_name;
 		bool				_signed;
 		int const			_signgrade;
-		int	const			_execgrade;
+		int const			_execgrade;
 	public:
 		Form( void );
 		Form( Form const &src );
