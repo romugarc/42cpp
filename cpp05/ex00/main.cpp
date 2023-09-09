@@ -16,7 +16,23 @@ int	main ( void ) {
 
 	std::cout << std::endl << "--Bureaucrat Creation :" << std::endl << std::endl;
 	Bureaucrat	B1;
-	Bureaucrat	B2("Bureau Crate", 1);
+	try
+	{
+		Bureaucrat	B2("Jean Patron", 0);
+	}
+	catch(const Bureaucrat::GradeTooHighException &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+	try
+	{
+		Bureaucrat	B2("Jean Patron", 151);
+	}
+	catch(const Bureaucrat::GradeTooLowException &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+	Bureaucrat	B2("Jean Patron", 1);
 	Bureaucrat	B3(B2);
 
 	std::cout << std::endl << "--Bureaucrats :" << std::endl << std::endl;
@@ -25,40 +41,35 @@ int	main ( void ) {
 	std::cout << B3 << std::endl;
 
 	std::cout << std::endl << "--Grade increase :" << std::endl << std::endl;
-	B1.incrGrade(42);
 	try
 	{
-		B2.incrGrade(42);
+		B1.incrGrade(1);
+		B2.incrGrade(1);
+		B1.incrGrade(1);
+		B3.incrGrade(1);
 	}
 	catch(const Bureaucrat::GradeTooHighException &e)
 	{
 		std::cerr << e.what() << std::endl;
 	}
-
-	std::cout << std::endl << "--B1 = B2 :" << std::endl << std::endl;
-	B1 = B2;
-
 	std::cout << std::endl << "--Bureaucrats :" << std::endl << std::endl;
 	std::cout << B1 << std::endl;
 	std::cout << B2 << std::endl;
 	std::cout << B3 << std::endl;
-
 	std::cout << std::endl << "--Grade decrease :" << std::endl << std::endl;
-	B2.decrGrade(130);
 	try
 	{
-		B3.decrGrade(150);
+		B1.decrGrade(1);
+		B2.decrGrade(149);
+		B3.decrGrade(151);
 	}
 	catch(const Bureaucrat::GradeTooLowException &e)
 	{
 		std::cerr << e.what() << std::endl;
 	}
-
 	std::cout << std::endl << "--Bureaucrats :" << std::endl << std::endl;
 	std::cout << B1 << std::endl;
 	std::cout << B2 << std::endl;
 	std::cout << B3 << std::endl;
-
 	std::cout << std::endl << "--Bureaucrat Destruction :" << std::endl << std::endl;
-	return (0);
 }
