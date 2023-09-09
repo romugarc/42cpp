@@ -30,24 +30,26 @@ Intern	&Intern::operator=( Intern const &rhs) {
 
 AForm	*Intern::makeForm( std::string name, std::string target ) const {
 	AForm *form = NULL;
+	std::string formlist[3] = {"ShrubberyCreation", "RobotomyRequest", "PresidentialPardon"};
+	int i = 0;
 
-	if (name.compare("ShrubberyCreation") == 0)
+	while (name != formlist[i] && i++ < 3);
+
+	switch (i)
 	{
-		form = new ShrubberyCreationForm(target);
-		std::cout << "Intern creates " << form->getName() << std::endl;
+		case 0:
+			form = new ShrubberyCreationForm(target);
+			break;
+		case 1:
+			form = new RobotomyRequestForm(target);
+			break;
+		case 2:
+			form = new PresidentialPardonForm(target);
+			break;
+		default:
+			std::cout << "No form matches the name " << name << std::endl;
+			break;
 	}
-	else if (name.compare("RobotomyRequest") == 0)
-	{
-		form = new RobotomyRequestForm(target);
-		std::cout << "Intern creates " << form->getName() << std::endl;
-	}
-	else if (name.compare("PresidentialPardon") == 0)
-	{
-		form = new PresidentialPardonForm(target);
-		std::cout << "Intern creates " << form->getName() << std::endl;
-	}
-	else
-		std::cout << "No form matches the given name" << std::endl;
 	return form;
 }
 

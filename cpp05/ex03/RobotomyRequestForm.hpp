@@ -16,12 +16,13 @@
 # include <iostream>
 # include <fstream>
 # include <cstdlib>
+# include <time.h>
 # include "AForm.hpp"
 
 class RobotomyRequestForm : public AForm
 {
 	private:
-		std::string const _target;
+		std::string _target;
 	public:
 		RobotomyRequestForm( void );
 		RobotomyRequestForm( RobotomyRequestForm const &src );

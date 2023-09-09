@@ -19,7 +19,6 @@ RobotomyRequestForm::RobotomyRequestForm( void ) : AForm("RobotomyRequestForm", 
 
 RobotomyRequestForm::RobotomyRequestForm( RobotomyRequestForm const &src ) : AForm("RobotomyRequestForm", 72, 45), _target(src.getTarget()) {
 	std::cout << "RobotomyRequestForm Copy constructor called" << std::endl;
-	setSignedStatus(src.getSignedStatus());
 	return;
 }
 
@@ -29,7 +28,11 @@ RobotomyRequestForm::RobotomyRequestForm( std::string const target ) : AForm("Ro
 }
 
 RobotomyRequestForm &RobotomyRequestForm::operator=( RobotomyRequestForm const &rhs ) {
-	(void)rhs;
+	if (this != &rhs)
+	{
+		setSignedStatus(rhs.getSignedStatus());
+		this->_target = rhs.getTarget();
+	}
 	return *this;
 }
 
@@ -41,8 +44,9 @@ void	RobotomyRequestForm::execute( Bureaucrat const &executor ) const {
 	this->CheckExec(executor);
 	std::cout << "VRRR... VRR..VRR.. VRRRRRRRRRRRRRRRR" << std::endl;
 	std::cout << "Tiens toi bien ça va bien se passer" << std::endl;
+	std::srand(time(0));
 	if (std::rand() % 2 == 1)
-		std::cout << "Robotomisation réussie sur " << executor.getName() << " ! Gnark gnark gnark" << std::endl;
+		std::cout << "Robotomisation réussie sur " << this->getTarget() << " ! Gnark gnark gnark" << std::endl;
 	else
 		std::cout << "Oups ! Encore un autre de cassé" << std::endl;
 	return;

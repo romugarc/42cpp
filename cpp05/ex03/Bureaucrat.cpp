@@ -84,14 +84,14 @@ void	Bureaucrat::decrGrade( int i ) {
 
 void	Bureaucrat::signForm( AForm &form ) const {
 	if (this->getGrade() > form.getSignGrade())
-		std::cout << this->getName() << "couldn't sign " << form.getName() << " because its grade is too low" << std::endl;
+		std::cout << this->getName() << " couldn't sign " << form.getName() << " because its grade is too low" << std::endl;
 	form.beSigned(*this);
 	std::cout << this->_name << " signed " << form.getName() << std::endl;
 }
 
 void	Bureaucrat::executeForm( AForm const &form ) {
 	if (form.getSignedStatus() == false)
-		std::cout << this->getName() << " couldn't execute " << form.getName() << " because it's already signed" << std::endl;
+		std::cout << this->getName() << " couldn't execute " << form.getName() << " because it's not signed" << std::endl;
 	if (this->getGrade() > form.getExecGrade())
 		std::cout << this->getName() << " couldn't execute " << form.getName() << " because grade is too low" << std::endl;
 	form.execute(*this);
