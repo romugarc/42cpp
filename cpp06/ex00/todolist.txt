@@ -1,0 +1,3 @@
+- ex00, ajouter les fonctions qui vont display correctement les bons types
+- Creer la ou les fonctions de conversion dans la fonction convert, a utiliser avant de display
+- Dans la fonction de conversion, voir si passer l'argument initial en tant que double avant de le convertir dans son vrai type serait efficace
