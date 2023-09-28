@@ -109,7 +109,10 @@ int	isNanInf ( std::string ch ) {
 }
 
 void	displayChar( std::string ch, int type ){
-	
+	if (type == NAN || type == INF)
+	{
+		std::cout << "char: " << "impossible" << std::endl;
+	}
 }
 
 void	displayResult( std::string ch, int type ) {
