@@ -103,16 +103,63 @@ int	isNanInf ( std::string ch ) {
 		i++;
 	if (ch.compare("nan") == 0 || ch.compare("nanf") == 0)
 		return (NAN);
-	if (ch.compare("inf") == 0 || ch.compare("inff") == 0)
+	if (ch.compare("+inf") == 0 || ch.compare("+inff") == 0 || ch.compare("-inf") == 0 || ch.compare("+inf") == 0)
 		return (INF);
 	return (0);
 }
 
-void	displayChar( std::string ch, int type ){
+void	displayChar( std::string ch, int type ) {
 	if (type == NAN || type == INF)
 	{
 		std::cout << "char: " << "impossible" << std::endl;
+		return;
 	}
+	if (type == CHAR && (ch[0] < ' ' || ch[0] > 126))
+	{
+		std::cout << "char: " << "Non displayable" << std::endl;
+		return;
+	}
+	std::cout << "char: " << "'" << ch  << "'" << std::endl;
+}
+
+void	displayInt( std::string ch, int type ) {
+	if (type == NAN || type == INF)
+	{
+		std::cout << "int: " << "impossible" << std::endl;
+		return;
+	}
+	std::cout << ch;
+	//std::cout << "int: " << atoi(ch) << std::endl;
+}
+
+void	displayFloat( std::string ch, int type ) {
+	if (type == NAN)
+	{
+		std::cout << "float: nanf" << std::endl;
+		return;
+	}
+	if (type == INF)
+	{
+		std::cout << "float: inff" << std::endl;
+		return;
+	}
+	std::cout << ch;
+	//std::cout << "float: " << atof(ch) << std::endl;
+}
+
+void	displayDouble( std::string ch, int type ) {
+	if (type == NAN)
+	{
+		std::cout << "double: nan" << std::endl;
+		return;
+	}
+	if (type == INF)
+	{
+		std::cout << "double: inf" << std::endl;
+		return;
+	}
+	std::cout << ch;
+	//std::cout << "double: " << atof(ch) << std::endl;
 }
 
 void	displayResult( std::string ch, int type ) {
@@ -128,7 +175,7 @@ void	ScalarConverter::convert( std::string ch ) {
 	type = isNanInf(ch);
 	if (type == 0)
 		type = checkType(ch.c_str());
-	
+	std::cout << type << std::endl;	
 }
 
 ScalarConverter::~ScalarConverter() {
