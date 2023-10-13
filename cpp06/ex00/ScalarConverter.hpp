@@ -15,13 +15,14 @@
 # define SCALAR_CONVERTER_HPP
 
 # include <iostream>
+# include <stdlib.h>
+# include <limits>
 # define CHAR 1
-# define NODISPLAY 2
-# define INT 3
-# define FLOAT 4
-# define DOUBLE 5
-# define NAN 6
-# define INF 7
+# define INT 2
+# define FLOAT 3
+# define DOUBLE 4
+# define NAN 5
+# define INF 6
 
 class ScalarConverter
 {
