@@ -13,12 +13,12 @@
 NAME	= serialize
 
 SRCS	=	main.cpp	\
-			Serialize.cpp	\
+			Serializer.cpp	\
 			Data.cpp
 
 OBJS	=	${SRCS:.cpp=.o}
 
-HEADER_FILES	=	Serialize.hpp \
+HEADER_FILES	=	Serializer.hpp \
 					Data.hpp
 
 CC		=	c++
