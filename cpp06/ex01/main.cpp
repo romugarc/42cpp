@@ -16,5 +16,6 @@ int main (void)
     std::cout << dat->getReal() << std::endl;
     std::cout << dat->getNum() << std::endl;
     delete dat;
+    
     return 0;
 }
