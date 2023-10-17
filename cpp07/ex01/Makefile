@@ -10,13 +10,13 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= functions
+NAME	= iter
 
 SRCS	=	main.cpp
 
 OBJS	=	${SRCS:.cpp=.o}
 
-HEADER_FILES	=	whatever.hpp
+HEADER_FILES	=	iter.hpp
 
 CC		=	c++
 RM		=	rm -f
