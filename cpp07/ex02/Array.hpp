@@ -14,7 +14,10 @@
 #ifndef ARRAY_HPP
 # define ARRAY_HPP
 
+template< typename T >
 class	Array {
+	private:
+		T *_array;
 	public:
 		Array( void );
 		Array( Array const & src );
@@ -22,6 +25,12 @@ class	Array {
 		~Array();
 
 		Array operator=( Array const &rhs );
+
+		T operator[]( unsigned int const &index );
+
+		unsigned int size( void ) const;
+
+		T getArray( void ) const;
 };
 
 #endif
