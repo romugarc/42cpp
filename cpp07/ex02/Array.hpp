@@ -18,19 +18,57 @@ template< typename T >
 class	Array {
 	private:
 		T *_array;
+		unsigned int _size;
 	public:
-		Array( void );
-		Array( Array const & src );
-		Array( unsigned int n );
-		~Array();
+		Array( void ) : _array(NULL), _size(0) {};
+		Array( unsigned int n ) : _array(new T[n]), _size(n) {};
+		Array( Array const & src ) : _array(new T[src.size()]), _size(src.size()) { 
+			std::cout << &this->_array << " copy " << &src._array << std::endl;
+			if (this->size() > 0)
+			{
+				for (unsigned int i = 0; i < src.size(); i++)
+					this->_array[i] = src._array[i];
+			}
+		};
+		~Array() {
+			delete [] this->_array;
+		};
 
-		Array operator=( Array const &rhs );
+		Array &operator=( Array const &rhs ) {
+			std::cout << &this->_array << " = " << &rhs._array << std::endl;
+			if (this->size() > 0)
+			{
+				for (unsigned int i = 0; i < rhs.size(); i++)
+					this->_array[i] = rhs._array[i];
+			}
+			return *this;
+		};
 
-		T operator[]( unsigned int const &index );
+		T &operator[]( unsigned int const &index ) {
+			if (index > this->size() - 1)
+				throw OutOfBoundsException();
+			else
+				return (this->_array[index]);
+		};
 
-		unsigned int size( void ) const;
+		T const &operator[]( unsigned int const &index ) const {
+			if (index > this->size() - 1)
+				throw OutOfBoundsException();
+			else
+				return (this->_array[index]);
+		};
 
-		T getArray( void ) const;
+		unsigned int size( void ) const {
+			return (this->_size);	
+		};
+
+		class	OutOfBoundsException : public std::exception {
+			public:
+				virtual const char *what() const throw() {
+					return ("Index is out of bounds for this array");
+				}
+		};
+
 };
 
 #endif
