@@ -52,6 +52,7 @@ class	Array {
 		};
 
 		T const &operator[]( unsigned int const &index ) const {
+			std::cout << "const" << std::endl;
 			if (index > this->size() - 1)
 				throw OutOfBoundsException();
 			else

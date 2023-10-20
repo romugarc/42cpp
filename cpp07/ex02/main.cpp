@@ -19,8 +19,29 @@ int main(int, char**)
     {
         Array<int> tmp = numbers;
         Array<int> test(tmp);
+
+        for (int i = 0; i < MAX_VAL; i++)
+        {
+            if (test[i] != numbers[i])
+            {
+             std::cerr << "didn't save the same value!!" << std::endl;
+             return 1;
+            }
+        }
+        if (&test == &numbers)
+        {
+            std::cerr << "Pointers are the same!!" << std::endl;
+            return 1;
+        }
     }
 
+    {
+        const Array<int> c = 1;
+
+        std::cout << c[0] << std::endl;
+        //c[0] = 1;
+
+    }
     for (int i = 0; i < MAX_VAL; i++)
     {
         if (mirror[i] != numbers[i])
@@ -29,7 +50,8 @@ int main(int, char**)
             return 1;
         }
     }
-    try
+    std::cout << &mirror << " " << &numbers << std::endl;
+    try 
     {
         numbers[-2] = 0;
     }
@@ -49,7 +71,7 @@ int main(int, char**)
     for (int i = 0; i < MAX_VAL; i++)
     {
         numbers[i] = rand();
-		std::cout << i << " " << numbers[i] << std::endl;
+		//std::cout << i << " " << numbers[i] << std::endl;
     }
     delete [] mirror;//
     return 0;
