@@ -13,12 +13,16 @@
 #ifndef SPAN_HPP
 # define SPAN_HPP
 
+# include <iostream>
+# include <algorithm>
+# include <vector>
+
 class Span
 {
 	private:
 		std::vector<int> container;
-	public:
 		Span( void );
+	public:
 		Span( unsigned int N );
 		Span( Span const &src );
 		~Span();
@@ -26,10 +30,24 @@ class Span
 		Span	&operator=( Span const &rhs );
 
 		void	addNumber( int nb );
-		void	addMoreNumbers( int nb ); //parametres incomplets
+		void	addMoreNumbers( int *tab, int tabsize ); //parametres incomplets
 
 		int	shortestSpan( void ) const;
 		int	longestSpan( void ) const;
+
+		class	ContainerFullException : public std::exception {
+			public:
+				virtual const char *what() const throw() {
+					return ("Container is full");
+				}
+		};
+
+		class	NotEnoughValuesException : public std::exception {
+			public:
+				virtual const char *what() const throw() {
+					return ("Span class doesn't contain enough values, need at least 2");
+				}
+		};
 };
 
 #endif
