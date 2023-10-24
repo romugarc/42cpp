@@ -36,6 +36,13 @@ Span	&Span::operator=( Span const &rhs ) {
 	return *this;
 }
 
+void	Span::getContainer( void ) const {
+	std::cout << "container: ";
+	for (size_t i = 0; i < this->container.size(); i++)
+		std::cout << this->container[i] << " ";
+	std::cout << std::endl;
+}
+
 void	Span::addNumber( int nb ) {
 	if (this->container.size() < this->container.capacity())
 		this->container.push_back(nb);
@@ -52,9 +59,9 @@ int	Span::shortestSpan( void ) const {
 	int shortest;
 	std::vector<int> tmp;
 
-	if (container.size() < 2)
+	if (this->container.size() < 2)
 		throw NotEnoughValuesException();
-	tmp = container;
+	tmp = this->container;
 	std::sort(tmp.begin(), tmp.end());
 	shortest = tmp[1] - tmp[0];
 	for (size_t i = 0; i < tmp.size(); i++)

@@ -29,8 +29,10 @@ class Span
 
 		Span	&operator=( Span const &rhs );
 
+		void	getContainer( void ) const;
+
 		void	addNumber( int nb );
-		void	addMoreNumbers( int *tab, int tabsize ); //parametres incomplets
+		void	addMoreNumbers( int *tab, int tabsize );
 
 		int	shortestSpan( void ) const;
 		int	longestSpan( void ) const;
