@@ -15,7 +15,8 @@ int main(int, char**)
         numbers[i] = value;
         mirror[i] = value;
     }
-    //SCOPE
+    
+    std::cout << "---------Tests sujet--------" << std::endl;
     {
         Array<int> tmp = numbers;
         Array<int> test(tmp);
@@ -35,13 +36,6 @@ int main(int, char**)
         }
     }
 
-    {
-        const Array<int> c = 1;
-
-        std::cout << c[0] << std::endl;
-        //c[0] = 1;
-
-    }
     for (int i = 0; i < MAX_VAL; i++)
     {
         if (mirror[i] != numbers[i])
@@ -50,7 +44,9 @@ int main(int, char**)
             return 1;
         }
     }
-    std::cout << &mirror << " " << &numbers << std::endl;
+    std::cout << "Mirror copy values OK" << std::endl;
+    std::cout << "Pointer addresses (should be different): " << &mirror << " " << &numbers << std::endl;
+    std::cout << "Catching OOB exceptions: " << std::endl;
     try 
     {
         numbers[-2] = 0;
@@ -71,8 +67,13 @@ int main(int, char**)
     for (int i = 0; i < MAX_VAL; i++)
     {
         numbers[i] = rand();
-		//std::cout << i << " " << numbers[i] << std::endl;
     }
-    delete [] mirror;//
+
+    std::cout << "---------Test const--------" << std::endl;
+    {
+        const Array<int> c = numbers;
+        std::cout << c[0] << " " << numbers[0] << std::endl;
+    }
+    delete [] mirror;
     return 0;
 }

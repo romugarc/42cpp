@@ -23,7 +23,6 @@ class	Array {
 		Array( void ) : _array(NULL), _size(0) {};
 		Array( unsigned int n ) : _array(new T[n]), _size(n) {};
 		Array( Array const & src ) : _array(new T[src.size()]), _size(src.size()) { 
-			std::cout << &this->_array << " copy " << &src._array << std::endl;
 			if (this->size() > 0)
 			{
 				for (unsigned int i = 0; i < src.size(); i++)
@@ -35,7 +34,6 @@ class	Array {
 		};
 
 		Array &operator=( Array const &rhs ) {
-			std::cout << &this->_array << " = " << &rhs._array << std::endl;
 			if (this->size() > 0)
 			{
 				for (unsigned int i = 0; i < rhs.size(); i++)
