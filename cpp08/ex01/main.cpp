@@ -17,6 +17,7 @@ int main(void)
 {
 	Span span(8);
 	int myints[] = {11, 2, 13, 4, 15, 6, 7, 8, 9};
+	int	toadd = 8;
 
 	try
 	{
@@ -29,9 +30,10 @@ int main(void)
 
 	span.getContainer();
 	
+	std::cout << "try adding: " << toadd << " numbers to container of remaining capacity: " << span.getRemainingCapacity() << std::endl;
 	try
 	{
-		span.addMoreNumbers(myints, 8);
+		span.addMoreNumbers(myints, toadd);
 	}
     catch(const std::exception& e)
     {
@@ -58,6 +60,7 @@ int main(void)
         std::cerr << e.what() << '\n';
     }
 
+	std::cout << "-------Tests sujet------" << std::endl;
 	{
 		Span sp = Span(5);
 		sp.addNumber(6);

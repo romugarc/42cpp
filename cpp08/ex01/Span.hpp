@@ -30,6 +30,7 @@ class Span
 		Span	&operator=( Span const &rhs );
 
 		void	getContainer( void ) const;
+		int		getRemainingCapacity( void ) const;
 
 		void	addNumber( int nb );
 		void	addMoreNumbers( int *tab, int tabsize );

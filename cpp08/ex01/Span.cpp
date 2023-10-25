@@ -43,6 +43,10 @@ void	Span::getContainer( void ) const {
 	std::cout << std::endl;
 }
 
+int	Span::getRemainingCapacity( void ) const {
+	return (this->container.capacity() - this->container.size());
+}
+
 void	Span::addNumber( int nb ) {
 	if (this->container.size() < this->container.capacity())
 		this->container.push_back(nb);
