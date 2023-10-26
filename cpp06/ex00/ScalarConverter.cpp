@@ -31,7 +31,7 @@ int	isChar( const char *ch ) {
 		i++;
 	if (i == 2)
 		return (0);
-	if (isdigit(ch[i]) == 1) //decider si ce sera un int ou un char
+	if (isdigit(ch[i]) == 1)
 		return (0);
 	if (ch[i] != '\0')
 		return (0);
@@ -39,7 +39,6 @@ int	isChar( const char *ch ) {
 }
 
 int isInt( const char *ch ) {
-	double val = std::atof(ch);
 	int i = 0;
 
 	if (ch[0] == '-')
@@ -48,14 +47,13 @@ int isInt( const char *ch ) {
 		i++;
 	if (ch[i] != '\0')
 		return (0);
-	if (val < std::numeric_limits<int>::min() || val > std::numeric_limits<int>::max())
+	if (isInsideLimits<int>(ch) == 0)
 		return (0);
 	
 	return (1);
 }
 
 int	isFloat( const char *ch ) {
-	double val = std::atof(ch);
 	int i = 0;
 
 	if (ch[0] == '-')
@@ -71,7 +69,7 @@ int	isFloat( const char *ch ) {
 		return (0);
 	if (ch[i + 1] != '\0')
 		return (0);
-	if (val < std::numeric_limits<float>::min() || val > std::numeric_limits<float>::max())
+	if (isInsideLimits<float>(ch) == 0)
 		return (0);
 
 	return (1);
@@ -84,6 +82,8 @@ int	isDouble( const char *ch ) {
 		i++;
 	while (isdigit(ch[i]))
 		i++;
+	if (ch[i] == '\0') //pour int, mais c'est un peu bizarre de gerer ca sachant que c'est ni un float literal ni un double literal
+		return (1);
 	if (ch[i] != '.')
 		return (0);
 	i++;
@@ -91,6 +91,9 @@ int	isDouble( const char *ch ) {
 		i++;
 	if (ch[i] != '\0')
 		return (0);
+	if (isInsideLimits<double>(ch) == 0)
+		return (0);
+
 	return (1);
 }
 
@@ -164,7 +167,7 @@ void	displayChar( const char *ch, int type ) {
 		case CHAR:
 			std::cout << "char: " << "'" << ch  << "'" << std::endl;
 			break;
-		case INT: //faire toutes les verifications du INT dans la fonction isInt et s'assurer que si la fonction retourne INT, alors il n'y a pas de doute possible
+		case INT:
 			std::cout << "char: " << "'" << static_cast<char>(convertToInt(ch))  << "'" << std::endl;
 			break;
 		case FLOAT:
@@ -182,6 +185,11 @@ void	displayInt( const char *ch, int type ) {
 		std::cout << "int: " << "impossible" << std::endl;
 		return;
 	}
+	if ((type == FLOAT || type == DOUBLE) && isInsideLimits<int>(ch) == 0)
+	{
+		std::cout << "int: " << "impossible" << std::endl;
+	 	return;
+	}
 	switch (type)
 	{
 		case 0:
@@ -190,7 +198,7 @@ void	displayInt( const char *ch, int type ) {
 		case CHAR:
 			std::cout << "int: " << "'" << static_cast<int>(ch[0])  << "'" << std::endl;
 			break;
-		case INT: //faire toutes les verifications du INT dans la fonction isInt et s'assurer que si la fonction retourne INT, alors il n'y a pas de doute possible
+		case INT:
 			std::cout << "int: " << "'" << convertToInt(ch) << "'" << std::endl;
 			break;
 		case FLOAT:
@@ -208,6 +216,11 @@ void	displayFloat( const char *ch, int type ) {
 		std::cout << "float: " << (float)std::atof(ch) << "f" << std::endl;
 		return;
 	}
+	if (type == DOUBLE && isInsideLimits<float>(ch) == 0)
+	{
+	 	std::cout << "float: " << "impossible" << std::endl;
+	 	return;
+	}
 	switch (type)
 	{
 		case 0:
@@ -217,7 +230,7 @@ void	displayFloat( const char *ch, int type ) {
 			std::cout.precision(9);
 			std::cout << "float: " << "'" << static_cast<float>(ch[0])  << "'" << std::endl;
 			break;
-		case INT: //faire toutes les verifications du INT dans la fonction isInt et s'assurer que si la fonction retourne INT, alors il n'y a pas de doute possible
+		case INT:
 			std::cout.precision(9);
 			std::cout << "float: " << "'" << static_cast<float>(convertToInt(ch)) << "'" << std::endl;
 			break;
@@ -247,7 +260,7 @@ void	displayDouble( const char *ch, int type ) {
 			std::cout.precision(17);
 			std::cout << "double: " << "'" << static_cast<double>(ch[0])  << "'" << std::endl;
 			break;
-		case INT: //faire toutes les verifications du INT dans la fonction isInt et s'assurer que si la fonction retourne INT, alors il n'y a pas de doute possible
+		case INT:
 			std::cout.precision(17);
 			std::cout << "double: " << "'" << static_cast<double>(convertToInt(ch)) << "'" << std::endl;
 			break;
@@ -275,7 +288,6 @@ void	ScalarConverter::convert( std::string ch ) {
 	type = isNanInf(ch);
 	if (type == 0)
 		type = checkType(ch.c_str());
-	std::cout << type << std::endl;
 	displayResult(ch.c_str(), type);
 }
 

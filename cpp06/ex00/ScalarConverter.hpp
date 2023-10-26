@@ -24,6 +24,24 @@
 # define NAN 5
 # define INF 6
 
+template< typename T >
+int	isInsideLimits(char const *ch)
+{
+	double val = std::atof(ch);
+
+	if (val > 0)
+	{
+		if (val < std::numeric_limits<T>::min() || val > std::numeric_limits<T>::max())
+			return (0);
+	}
+	else
+	{
+		if (val < -std::numeric_limits<T>::max())
+			return (0);
+	}
+	return (1);
+}
+
 class ScalarConverter
 {
 	public:
