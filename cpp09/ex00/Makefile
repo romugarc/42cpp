@@ -10,13 +10,14 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= easyfind
+NAME	= PmergeMe
 
-SRCS	=	main.cpp
+SRCS	=	main.cpp	\
+			PmergeMe.cpp
 
 OBJS	=	${SRCS:.cpp=.o}
 
-HEADER_FILES	=	pmergeme.hpp
+HEADER_FILES	=	PmergeMe.hpp
 
 CC		=	c++
 RM		=	rm -f
