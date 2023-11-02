@@ -15,19 +15,26 @@
 
 int main (void)
 {
-    Data *dat = new Data;
-    Serializer seri;
-    uintptr_t num;
-
-    std::cout << dat->getReal() << std::endl;
-    std::cout << dat->getNum() << std::endl;
-    num = seri.serialize(dat);
-    std::cout << dat->getReal() << std::endl;
-    std::cout << dat->getNum() << std::endl;
-    dat = seri.deserialize(num);
-    std::cout << dat->getReal() << std::endl;
-    std::cout << dat->getNum() << std::endl;
-    delete dat;
+    {
+        Data dat;
+        Data *ptr;
+        Serializer seri;
+        uintptr_t num;
     
+        std::cout << "-----------data values----------" << std::endl;
+        std::cout << dat.getReal() << std::endl;
+        std::cout << dat.getNum() << std::endl;
+        std::cout << "-----------data values after serialize----------" << std::endl;
+        num = seri.serialize(&dat);
+        std::cout << dat.getReal() << std::endl;
+        std::cout << dat.getNum() << std::endl;
+        std::cout << "-----------data and ptr values after deserialize----------" << std::endl;
+        ptr = seri.deserialize(num);
+        std::cout << dat.getReal() << std::endl;
+        std::cout << dat.getNum() << std::endl;
+        std::cout << ptr->getReal() << std::endl;
+        std::cout << ptr->getNum() << std::endl;
+        std::cout << &dat << " " << ptr << std::endl;
+    }   
     return 0;
 }
