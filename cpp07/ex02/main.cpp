@@ -6,7 +6,6 @@
 #define MAX_VAL 750
 int main(int, char**)
 {
-    Array<int> empty;
     Array<int> numbers(MAX_VAL);
     int* mirror = new int[MAX_VAL];
     srand(time(NULL));
@@ -75,6 +74,13 @@ int main(int, char**)
         const Array<int> c = numbers;
         std::cout << c[0] << " " << numbers[0] << std::endl;
     }
+
+    std::cout << "---------Test empty--------" << std::endl;
+    {
+        Array<int> empty;
+        std::cout << " size: " << empty.size() << std::endl;
+    }
+
     delete [] mirror;
     return 0;
 }
