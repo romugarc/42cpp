@@ -18,18 +18,17 @@ int main (void)
     {
         Data dat;
         Data *ptr;
-        Serializer seri;
         uintptr_t num;
     
         std::cout << "-----------data values----------" << std::endl;
         std::cout << dat.getReal() << std::endl;
         std::cout << dat.getNum() << std::endl;
         std::cout << "-----------data values after serialize----------" << std::endl;
-        num = seri.serialize(&dat);
+        num = Serializer::serialize(&dat);
         std::cout << dat.getReal() << std::endl;
         std::cout << dat.getNum() << std::endl;
         std::cout << "-----------data and ptr values after deserialize----------" << std::endl;
-        ptr = seri.deserialize(num);
+        ptr = Serializer::deserialize(num);
         std::cout << dat.getReal() << std::endl;
         std::cout << dat.getNum() << std::endl;
         std::cout << ptr->getReal() << std::endl;

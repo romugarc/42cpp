@@ -19,15 +19,16 @@
 
 class Serializer
 {
-	public:
+	private:
 		Serializer( void );
 		Serializer( Serializer const &src );
+	public:
 		~Serializer();
 
 		Serializer &operator=( Serializer const &rhs );
 
-        uintptr_t serialize(Data* ptr);
-        Data* deserialize(uintptr_t raw);
+        static uintptr_t serialize(Data* ptr);
+        static Data* deserialize(uintptr_t raw);
 };
 
 #endif

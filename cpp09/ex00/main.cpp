@@ -18,6 +18,7 @@
 
 struct numbers {
 	int	nb;
+	int	pos;
 	std::deque<numbers*> rf;
 };
 
