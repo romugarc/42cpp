@@ -29,10 +29,8 @@ int	error_handler(int argc, char **argv)
 
 int	main(int argc, char **argv)
 {
-	ScalarConverter scalar;
-
 	if (error_handler(argc, argv) == 1)
 		return (1);
-	scalar.convert(argv[1]);
+	ScalarConverter::convert(argv[1]);
 	return (0);
 }

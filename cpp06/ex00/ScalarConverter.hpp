@@ -44,9 +44,10 @@ int	isInsideLimits(char const *ch)
 
 class ScalarConverter
 {
-	public:
+	private:
 		ScalarConverter( void );
 		ScalarConverter( ScalarConverter const &src );
+	public:
 		~ScalarConverter();
 
 		ScalarConverter &operator=( ScalarConverter const &rhs );
