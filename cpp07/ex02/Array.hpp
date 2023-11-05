@@ -43,15 +43,14 @@ class	Array {
 		};
 
 		T &operator[]( unsigned int const &index ) {
-			if (index > this->size() - 1)
+			if (index > this->size() - 1 || this->size() == 0)
 				throw OutOfBoundsException();
 			else
 				return (this->_array[index]);
 		};
 
 		T const &operator[]( unsigned int const &index ) const {
-			std::cout << "const" << std::endl;
-			if (index > this->size() - 1)
+			if (index > this->size() - 1 || this->size() == 0)
 				throw OutOfBoundsException();
 			else
 				return (this->_array[index]);
