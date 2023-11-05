@@ -40,16 +40,12 @@ class Span
 
 		class	ContainerFullException : public std::exception {
 			public:
-				virtual const char *what() const throw() {
-					return ("Container is full");
-				}
+				virtual const char *what() const throw();
 		};
 
 		class	NotEnoughValuesException : public std::exception {
 			public:
-				virtual const char *what() const throw() {
-					return ("Span class doesn't contain enough values, need at least 2");
-				}
+				virtual const char *what() const throw();
 		};
 };
 

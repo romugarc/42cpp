@@ -13,7 +13,8 @@
 NAME	= span
 
 SRCS	=	main.cpp	\
-			Span.cpp
+			Span.cpp	\
+			exception.cpp
 
 OBJS	=	${SRCS:.cpp=.o}
 
