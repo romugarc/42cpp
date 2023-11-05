@@ -16,20 +16,22 @@
 template < typename T >
 void	iter(T *array, unsigned int len, void (*f)(T &))
 {
-	while (len > 0)
+	int	i = 0;
+
+	while (i < len)
 	{
-		f(array[len - 1]);
-		len--;
+		f(array[i]);
+		i++;
 	}
 }
 
 template < typename T >
 void	iter(T const *array, unsigned int len, void (*f)(T const &))
 {
-	while (len > 0)
+	while (i < len)
 	{
-		f(array[len - 1]);
-		len--;
+		f(array[i]);
+		i++;
 	}
 }
 
