@@ -21,13 +21,25 @@ int main (void)
 		const std::vector<int> myvector (myints, myints+4);
 		std::vector<int>::const_iterator it;
 
-		it = easyfind(myvector, 20);
-		if (it == myvector.end())
+		try
 		{
-			std::cout << "not found" << std::endl;
-		}
-		else
+			it = easyfind(myvector, 20);
 			std::cout << *it << std::endl;
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << e.what() << '\n';
+		}
+		
+		try
+		{
+			it = easyfind(myvector, 50);
+			std::cout << *it << std::endl;
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << e.what() << '\n';
+		}
 	}
 
 	{
@@ -35,16 +47,24 @@ int main (void)
 		std::vector<int> myvector (myints, myints+4);
 		std::vector<int>::iterator it;
 
-		it = easyfind(myvector, 20);
-		if (it == myvector.end())
+		try
 		{
-			std::cout << "not found" << std::endl;
+			it = easyfind(myvector, 20);
+			std::cout << *it << std::endl;
 		}
-		else
+		catch(const std::exception& e)
 		{
+			std::cerr << e.what() << '\n';
+		}
+		
+		try
+		{
+			it = easyfind(myvector, 50);
 			std::cout << *it << std::endl;
-			*it = 10;
-			std::cout << *it << std::endl;
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << e.what() << '\n';
 		}
 	}
 }
