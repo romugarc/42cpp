@@ -12,198 +12,64 @@
 
 #include "PmergeMe.hpp"
 
-int	my_is_sorted_vector(std::vector<Numbers*> vec, int size)
-{
-	int	prev = vec[0]->nb;
-	for (int i = 0; i < size; i++)
-	{
-		if (prev > vec[i]->nb)
-			return 0;
-		prev = vec[i]->nb;
-	}
-	return 1;
-}
-
-std::vector<Numbers*>	vectorAdjustPos(std::vector<Numbers*> nums)
-{
-	for (size_t i = 0; i < nums.size(); i++)
-	{
-		nums[i]->pos.pop_back();
-		nums[i]->pos.push_back(i);
-		std::cout << nums[i]->pos.back() << nums.size() << std::endl;
-	}
-	return (nums);
-}
-
-int	dequeBinarySearch(std::deque<Numbers*> bigS, std::deque<Numbers*> Tiny, size_t index)
-{
-	size_t	xmin = 0;
-	size_t	xmax;
-	size_t	x;
-
-	if (Tiny[index]->rf.back() == NULL)
-		xmax = bigS.size() - 1;
-	else
-		xmax = Tiny[index]->rf.back()->pos.back();
-	x = (xmax - xmin) / 2;
-	while ((xmax - xmin) > 1)
-	{
-		if (Tiny[index]->nb <= bigS[x]->nb)
-		{
-			xmax = x - 1;
-			x = (xmax - xmin) / 2;
-		}
-		else
-		{
-			xmin = x + 1;
-			x = xmin + ((xmax - xmin) / 2);
-		}
-	}
-	if (Tiny[index]->nb <= bigS[xmax]->nb) //on va toujours comparer avec le nb de droite
-	{
-		if (Tiny[index]->nb <= bigS[xmin]->nb)
-			return (xmin); //insertion avant le plus petit des 2 nb
-		else
-			return (xmax); //insertion entre les 2 nb restants
-	}
-	else
-		return (xmax + 1); //insertion apres le plus grand des 2 nb
-}
-
-std::deque<Numbers*> dequeMergeSort(std::deque<Numbers*> nums, int size)
-{
-	if (size == 2)
-	{
-		if (nums[0]->nb > nums[1]->nb)
-			std::iter_swap(nums[0], nums[1]);
-	}
-	if (my_is_sorted_deque(nums, size) == 1)
-		return nums;
-	std::deque<Numbers*> bigS;
-	std::deque<Numbers*> Tiny;
-	for (int i = 0; i < size; i = i + 2)
-	{
-		if (size % 2 == 1 && i == size - 1) //nombre impair seul
-		{
-			Tiny.push_back(nums[i]);
-			break;
-		}
-		if (nums[i]->nb > nums[i]->rf.back()->nb)
-		{
-			bigS.push_back(nums[i]);
-			Tiny.push_back(nums[i + 1]);
-		}
-		else
-		{
-			bigS.push_back(nums[i + 1]);
-			Tiny.push_back(nums[i]);
-		}
-	}
-	dequeFormPairs(bigS, bigS.size());
-	bigS = dequeMergeSort(bigS, bigS.size());
-	//insertion
-	for (size_t i = 0; i < Tiny.size(); i++)
-		Tiny[i]->pos.push_back(i);
-	for (size_t i = 0; i < bigS.size(); i++)
-	{
-		bigS[i]->rf.pop_back();
-		bigS[i]->pos.push_back(i);
-	}
-	bigS.insert(bigS.begin(), bigS[0]->rf.back());
-	Tiny.erase(Tiny.begin()+bigS[0]->pos.back()); //le premier element de bigS appartenait a Tiny donc pas besoin de rf
-	bigS[0]->pos.pop_back();
-	dequeAdjustPos(bigS, 0);
-	// for (size_t i = 0; i < bigS.size(); i++)
-	// {
-	// 	std::cout << ' ' << bigS[i] << " " << bigS[i]->nb << " " << bigS[i]->rf.back();
-	// 	std::cout << ' ' << bigS[i]->pos.back();
-	// }
-	// std::cout << std::endl;
-	// for (size_t i = 0; i < Tiny.size(); i++)
-	// {
-	// 	std::cout << ' ' << Tiny[i] << " " << Tiny[i]->nb << " " << Tiny[i]->rf.back();
-	// 	std::cout << ' ' << Tiny[i]->pos.back();
-	// }
-	// std::cout << std::endl;
-	//swap Tiny
-	Tiny = dequeReorderInGroups(Tiny);
-	dequeAdjustPos(Tiny, 0);
-	//binary search
-	int	x;
-	while(Tiny.size() > 0)
-	{
-		x = dequeBinarySearch(bigS, Tiny, 0);
-		bigS.insert(bigS.begin()+x, Tiny[0]);
-		Tiny.erase(Tiny.begin());
-		bigS[x]->pos.pop_back();
-		dequeAdjustPos(Tiny, 0);
-		dequeAdjustPos(bigS, 0);
-	}
-	return bigS;
-}
-
 int	main (int argc, char **argv)
 {
 	if (error_handler(argc, argv) == 1)
 		return 1;
 
-	Numbers *nums = initializeNumbers(argc, argv);
-	{
-		// for (int i = 0; i < argc - 1; i++)
-		// 	std::cout << ' ' << &nums[i];
-		// std::cout << std::endl;
-		// for (int i = 0; i < argc - 1; i++)
-		// 	std::cout << nums[i].nb << "               " ;
-		// std::cout << std::endl;
-		// for (int i = 0; i < argc - 1; i++)
-		// 	std::cout << ' ' << nums[i].rf.back();
-		// std::cout << std::endl;
-	}
-	std::deque<Numbers*> deq;
+	std::cout << "-------------Deque---------------" << std::endl;
+	clock_t	start, end;
+	double cpu_time_used;
+	start = clock();
+	NumbersDeq *nums = initializeNumbersDeq(argc, argv);
+	std::deque<NumbersDeq*> deq;
+	
 	for (int i = 0; i < argc - 1; i++)
 		deq.push_back(&nums[i]);
+	end = clock();
+	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+	std::cout << "Data management :" << cpu_time_used << std::endl;
+	std::cout << "Before: ";
 	for (size_t i = 0; i < deq.size(); i++)
-	{
-		//std::cout << ' ' << deq[i] << " ";
 		std::cout << deq[i]->nb << " ";
-		//std::cout << deq[i]->rf.back();
-	}
 	std::cout << std::endl;
-	// deq = dequeReorderInGroups(deq);
-	// for (size_t i = 0; i < deq.size(); i++)
-	// {
-	// 	//std::cout << ' ' << deq[i] << " ";
-	// 	std::cout << deq[i]->nb << " ";
-	// 	//std::cout << deq[i]->rf.back();
-	// }
-	// std::cout << std::endl;
-	deq = dequeMergeSort(deq, argc - 1);
+	deq = mergeSort(deq, argc - 1);
+	std::cout << "After: ";
 	for (size_t i = 0; i < deq.size(); i++)
-	{
-		//std::cout << ' ' << deq[i] << " ";
 		std::cout << deq[i]->nb << " ";
-		//std::cout << deq[i]->rf.back();
-	}
 	std::cout << std::endl;
-	//for (int i = 0; i < argc - 1; i++)
-	//{
-	//	std::cout << ' ' << deq[i]->nb;
-	//}
-	//std::cout << std::endl;
-	std::deque<int> done;
 
+	std::deque<int> done;
 	for (size_t i = 0; i < deq.size(); i++)
-	{
-		//std::cout << ' ' << deq[i] << " ";
 		done.push_back(deq[i]->nb);
-		//std::cout << deq[i]->rf.back();
-	}
 	std::cout << std::endl;
 	if (std::is_sorted(done.begin(), done.end()))
 		std::cout << "LET'S FUCKING GO" << std::endl;
 	else
 		std::cout << "fuck" << std::endl;
 	delete [] nums;
+
+	std::cout << "-------------Vector---------------" << std::endl;
+	NumbersVec *numsv = initializeNumbersVec(argc, argv);	
+	std::vector<NumbersVec*> vec;
+	
+	for (int i = 0; i < argc - 1; i++)
+		vec.push_back(&numsv[i]);
+	std::cout << "Before: ";
+	for (size_t i = 0; i < vec.size(); i++)
+		std::cout << vec[i]->nb << " ";
+	std::cout << std::endl;
+	vec = mergeSort(vec, argc - 1);
+	std::cout << "After: ";
+	for (size_t i = 0; i < vec.size(); i++)
+		std::cout << vec[i]->nb << " ";
+	std::cout << std::endl;
+
+	if (std::is_sorted(done.begin(), done.end()))
+		std::cout << "LET'S FUCKING GO" << std::endl;
+	else
+		std::cout << "fuck" << std::endl;
+	delete [] numsv;
 	return 0;
 	// {
 	// 	int max = 10;
