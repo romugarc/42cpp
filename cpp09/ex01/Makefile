@@ -10,14 +10,14 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= BitcoinExchange
+NAME	= RPN
 
 SRCS	=	main.cpp	\
-			BitcoinExchange.cpp
+			RPN.cpp
 
 OBJS	=	${SRCS:.cpp=.o}
 
-HEADER_FILES	=	BitcoinExchange.hpp
+HEADER_FILES	=	RPN.hpp
 
 CC		=	c++
 RM		=	rm -f

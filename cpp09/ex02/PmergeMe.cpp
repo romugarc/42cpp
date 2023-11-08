@@ -64,3 +64,44 @@ void	dequeFormPairs(std::deque<Numbers*> nums, int size)
 		  	nums[i]->rf.push_back(NULL);
 	}
 }
+
+std::deque<Numbers*>	dequeAdjustPos(std::deque<Numbers*> nums, size_t start)
+{
+	for (size_t i = start; i < nums.size(); i++)
+	{
+		nums[i]->pos.pop_back();
+		nums[i]->pos.push_back(i);
+	}
+	return (nums);
+}
+
+int	my_pow(int x)
+{
+	int	result = 1;
+
+	for (int i = 0; i < x; i++)
+		result = result * 2;
+	return (result);
+}
+
+std::deque<Numbers*>	dequeReorderInGroups(std::deque<Numbers*> Tiny)
+{
+	size_t	rangemin = 0;
+	size_t	rangemax = 2;
+	int	x = 2;
+	int	currgrp;
+	int	futuregrp;
+
+	while (rangemax <= Tiny.size())
+	{
+		currgrp = rangemax - rangemin;
+		futuregrp = my_pow(x) - currgrp;
+		std::reverse(Tiny.begin()+rangemin, Tiny.begin()+rangemax);
+		rangemin = rangemax;
+		rangemax = rangemax + futuregrp;
+		if (rangemax > Tiny.size() && rangemin < Tiny.size())
+			rangemax = Tiny.size();
+		x++;
+	}
+	return (Tiny);
+}

@@ -1,243 +1,160 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rgarcia <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/27 16:48:52 by rgarcia           #+#    #+#             */
-/*   Updated: 2023/10/27 16:48:54 by rgarcia          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "BitcoinExchange.hpp"
 
-#include "PmergeMe.hpp"
-
-int	my_is_sorted_vector(std::vector<Numbers*> vec, int size)
-{
-	int	prev = vec[0]->nb;
-	for (int i = 0; i < size; i++)
-	{
-		if (prev > vec[i]->nb)
-			return 0;
-		prev = vec[i]->nb;
-	}
-	return 1;
+bool check_date_is_correct(string & clean_date) {
+	if (clean_date.length() != 10)
+		return false;
+	if (!(clean_date[4] == '-' && clean_date[7] == '-'))
+		return false;
+	return true;
 }
 
-void	testing(std::deque<Numbers*> nums, int size)
-{
-	std::deque<Numbers*> bigS;
-	std::deque<Numbers*> Tiny;
-	for (int i = 0; i < size; i = i + 2)
+bool first_part_check_is_ok(string first_half) {
+
+	// create the usefull string and struct
+	string trimed_first_half;
+	struct tm tm;
+
+	// clean the first part
+	//cerr << "first half ->" << first_half << "<-" << endl;
+	trimed_first_half = trim(first_half);
+	//cerr << "test ->" << trimed_first_half << "<-" << endl;
+
+	// test id the first half contain something other than the | caracter
+	if (trimed_first_half.length() < 1)
 	{
-		if (size % 2 == 1 && i == size - 1) //nombre impair seul
-		{
-			Tiny.push_back(nums[i]);
-			break;
-		}
-		if (nums[i]->nb > nums[i]->rf.back()->nb)
-		{
-			bigS.push_back(nums[i]);
-			Tiny.push_back(nums[i + 1]);
-		}
-		else
-		{
-			bigS.push_back(nums[i + 1]);
-			Tiny.push_back(nums[i]);
-		}
+		cout << "Invalide format, string doesn't have character before '|', expected a date" << endl;
+		return false;
 	}
-	for (int i = 0; i < size / 2; i++)
-		std::cout << ' ' << bigS[i] << " " << bigS[i]->nb << " " << bigS[i]->rf.back();
-	std::cout << std::endl;
-	for (int i = 0; i < size / 2; i++)
-		std::cout << ' ' << Tiny[i] << " " << Tiny[i]->nb << " " << Tiny[i]->rf.back();
-	std::cout << std::endl;
-	dequeFormPairs(bigS, size / 2);
-	for (int i = 0; i < size / 2; i++)
+
+	// create the clean first part containing only the date
+	// first_part_clean = trim(trimed_first_half.substr(0, first_half.length() - 1));
+	// cerr << "test trim clean string : ->" << first_part_clean <<  "<-"  << endl;
+	
+	// check if the date is correct
+	if (!(strptime(trimed_first_half.c_str(), "%Y-%m-%d", &tm) && check_date_is_correct(trimed_first_half)))
 	{
-		std::cout << ' ' << bigS[i] << " " << bigS[i]->nb << " " << bigS[i]->rf.back();
+		cout << "Invalid format, date are in a wrong format, expected format is : year-month-days with year > 1900 month and days must have 2 caracter" << endl;
+		return false;
 	}
-	std::cout << std::endl;
-	for (int i = 0; i < size; i++)
-	{
-		std::cout << ' ' << nums[i] << " " << nums[i]->nb << " " << nums[i]->rf.back();
-	}
-	std::cout << std::endl;
+	return true;
 }
 
-std::deque<Numbers*> dequeMergeSort(std::deque<Numbers*> nums, int size)
-{
-	if (size == 2)
-	{
-		if (nums[0]->nb > nums[1]->nb)
-			std::iter_swap(nums[0], nums[1]);
-	}
-	if (my_is_sorted_deque(nums, size) == 1)
-		return nums;
-	else
-	{	
-		std::deque<Numbers*> bigS;
-		std::deque<Numbers*> Tiny;
-		for (int i = 0; i < size; i = i + 2)
-		{
-			if (size % 2 == 1 && i == size - 1) //nombre impair seul
-			{
-				Tiny.push_back(nums[i]);
-				break;
-			}
-			if (nums[i]->nb > nums[i]->rf.back()->nb)
-			{
-				bigS.push_back(nums[i]);
-				Tiny.push_back(nums[i + 1]);
-			}
-			else
-			{
-				bigS.push_back(nums[i + 1]);
-				Tiny.push_back(nums[i]);
-			}
-		}
-		dequeFormPairs(bigS, size / 2);
-		bigS = dequeMergeSort(bigS, size / 2); //pas encore recursif
-		for (int i = 0; i < size / 2; i++)
-		{
-			std::cout << ' ' << bigS[i] << " " << bigS[i]->nb << " " << bigS[i]->rf.back();
-		}
-		std::cout << std::endl;
-		for (int i = 0; i < size; i++)
-		{
-			std::cout << ' ' << nums[i] << " " << nums[i]->nb << " " << nums[i]->rf.back();
-		}
-		std::cout << std::endl;
-		//insertion a commencer
-	}
-	return nums;
+string return_first_part(string first_half) {
+
+	//cerr << "j'ai : " << s << "returning ->" << trim(trim(first_half).substr(0, first_half.length() - 1)) << "<-" << endl;
+	return trim(first_half);
 }
 
-int	main (int argc, char **argv)
-{
-	if (error_handler(argc, argv) == 1)
+bool second_part_check_is_ok(string second_half) {
+
+	//create the data needed
+	string trimed_second_half;
+
+	//cerr << "second_half contain : ->" << second_half << "<- ending here" << endl;
+	trimed_second_half = trim(second_half);
+	//cerr << "trimed second_half contain : ->" << trimed_second_half << "<- ending here" << endl;
+
+	// check if the second half contain something
+	if (trimed_second_half.empty())
+	{
+		cout << "Invalide format, string doesn't have character after '|', expected a float" << endl;
+		return false;
+	}
+
+	// check if the contain of the second half is a correct format for the expected float
+	if (!is_a_valid_double(trimed_second_half))
+	{
+		cout << "Invalide format, the right end side of the '|' character is not in a valide float format, expecting number from 0-9, '.', ',' only" << endl;
+		return false;
+	}
+
+	// convert the string into a double
+	double input_value = atof(second_half.c_str());
+
+	// check if the double is in the correct boundary
+	if (!(input_value >= 0 && input_value <= 1000))
+	{
+		cout.precision(17);
+		cout << "Invalide format, the float must be between 0 and 1000 included, found : => " << input_value << endl;
+		return false;
+	}
+	return true;
+}
+
+double return_second_half(string second_half) {
+	//cerr << "second half ->" << second_half.c_str() << "<-" << endl;
+	return atof(second_half.c_str());
+}
+
+int main(int ac, char **av) {
+
+	// check if correct number of arguement
+	if (ac != 2) {
+		cout << "this program must take exactly one argument witch is the name of the input file that must be to the format : " << endl << endl << "date | value" << endl << endl << " where date is in a \"Year-Month-Day\" format and value must be either a float or a positive interger between 0 and 1000 included, ps the first line is ignore" << endl;
 		return 1;
-
-	Numbers *nums = initializeNumbers(argc, argv);
-	{
-		for (int i = 0; i < argc - 1; i++)
-			std::cout << ' ' << &nums[i];
-		std::cout << std::endl;
-		for (int i = 0; i < argc - 1; i++)
-			std::cout << nums[i].nb << "               " ;
-		std::cout << std::endl;
-		for (int i = 0; i < argc - 1; i++)
-			std::cout << ' ' << nums[i].rf.back();
-		std::cout << std::endl;
 	}
-	std::deque<Numbers*> deq;
-	for (int i = 0; i < argc - 1; i++)
-		deq.push_back(&nums[i]);
-	//testing(deq, argc - 1);
-	deq = dequeMergeSort(deq, argc - 1);
-	for (int i = 0; i < argc - 1; i++)
+	try
 	{
-		std::cout << ' ' << deq[i]->nb;
+		// get the data in the specified file
+		BitcoinExchange data1("data.csv");
+		data1.display();
+		// try to open the input file
+		ifstream file(av[1]);
+		if (!file.is_open()) {
+			throw "can't open input file";
+		}
+
+		// init usefull data
+		string line;
+
+		//skip the first line of the file
+		std::getline(file, line);
+
+		// as long as the file contain something
+		while (file.good())
+		{
+			// get the line
+			std::getline(file, line);
+			//cerr << "buffer contain : ->" << line  << "<- ending here" << endl;
+
+			//if the line doesn't contain a | caractere
+			if (line.find('|') == string::npos)
+			{
+				cout << "Invalide format, string doesn't contain the '|' character" << endl;
+				continue;
+			}
+
+			// prepare a stream to split the line
+			std::stringstream tmp_stream(line);
+			//cerr << "buffer contain : ->" << line  << "<- ending here" << endl;
+			// split the line into two part on the | caractere putting the first half in first_half
+			string first_half;
+			getline(tmp_stream, first_half, '|');
+			//cerr << "first first_half ->" << first_half << "<-" << endl;
+			string second_half;
+			getline(tmp_stream, second_half, '|');
+			//cerr << "first second_half ->" << second_half << "<-" << endl;
+
+			if (!first_part_check_is_ok(first_half))
+				continue;
+			if (!second_part_check_is_ok(second_half))
+				continue;
+
+			//cerr << "return first half : ->" << return_first_part(first_half) << "<-" << endl;
+			string date = data1.get_the_closest_key(return_first_part(first_half));
+			//cerr << "date : ->" << date << endl;
+
+			if (tmp_stream.good())
+				cout << "nice try but i can't accept other format than date | value and nothing else after" << endl;
+			else if (date == "false")
+				cout << "the bitcoin didn't existed back then sorry i can't say how much : " << return_second_half(second_half) << " was worth" << endl;
+			else
+				cout << trim(date) << " => " << return_second_half(second_half) << " = " << data1.get_the_value(date) * return_second_half(second_half) << endl;
+		}
 	}
-	std::cout << std::endl;
-	delete [] nums;
-	return 0;
-	// {
-	// 	int max = 10;
-	// 	int myints[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-	// 	Numbers nums[max];
-	// 	for (int i = 0; i < 10; i++)
-	// 		nums[i].nb = myints[i];
-	// 	for (int i = 0; i < 10; i++)
-	// 	{
-	// 		if (i % 2 == 0 && i + 1 < max)
-	// 			nums[i].rf.push_back(&nums[i + 1]);
-	// 		else if (i % 2 == 1)
-	// 			nums[i].rf.push_back(&nums[i - 1]);
-	// 		 else //nombre impair d'inputs, pas de paire pour le dernier input
-	// 		 	nums[i].rf.push_back(NULL);
-	// 	}
-	// 	for (int i = 0; i < 10; i++)
-	// 		std::cout << ' ' << &nums[i];
-	// 	std::cout << std::endl;
-	// 	for (int i = 0; i < 10; i++)
-	// 		std::cout << nums[i].nb << "               " ;
-	// 	std::cout << std::endl;
-	// 	for (int i = 0; i < 10; i++)
-	// 		std::cout << ' ' << nums[i].rf.back();
-	// 	std::cout << std::endl;
-
-	// 	for (int i = 0; i < 10; i++)
-	// 		std::cout << ' ' << &nums[i];
-	// 	std::cout << std::endl;
-	// 	for (int i = 0; i < 10; i++)
-	// 		std::cout << nums[i].nb << "               " ;
-	// 	std::cout << std::endl;
-	// 	for (int i = 0; i < 10; i++)
-	// 		std::cout << ' ' << nums[i].rf.back();
-	// 	std::cout << std::endl;
-
-	// 	std::deque<Numbers*> deq;
-	// 	for (int i = 0; i < 10; i++)
-	// 		deq.push_back(&nums[i]);
-	// 	for (int i = 0; i < 10; i++)
-	// 		//std::cout << ' ' << deq[i].nb << deq[i].rf->nb;
-	// 		std::cout << ' ' << deq[i]->nb << deq[i]->rf.back();
-	// 	std::cout << std::endl;
-	// 	std::iter_swap(deq.begin(), deq.begin()+3);
-	// 	for (int i = 0; i < 10; i++)
-	// 		//std::cout << ' ' << deq[i].nb << deq[i].rf->nb;
-	// 		std::cout << ' ' << deq[i]->nb << deq[i]->rf.back();
-	// 	std::cout << std::endl;
-	// 	// for (int i = 0; i < 10; i++)
-	// 	// {
-	// 	// 	std::cout << &deq[i]->rf.back() << std::endl;
-	// 	// 	std::cout << &nums[i].rf.back() << std::endl;
-	// 	// }
-	// 	for (std::deque<Numbers*>::iterator it = deq.begin(); it != deq.end(); ++it)
-    //  	{
-	//  		std::cout << ' ' << *it;
-	//  	}
-	// 	std::cout << std::endl;
-	// 	for (std::deque<Numbers*>::iterator it = deq.begin(); *it != nums[0].rf.back(); ++it)
-    //  	{
-	//  		std::cout << ' ' << *it;
-	//  	}
-	// 	std::cout << std::endl;
-	// 	////Tout ceci prouve que on peut stocker des références à nos nombres et les utiliser mais dans la recherche de l'iterator, on fait des comparaisons.... donc valide ou pas?
-	// 	//Faire un while (it = deq.begin() != nums[0].rf.back()) { it++ et substring_size++ } comme ca on a la taille de la substring et on peut faire nos divs
-	// }
-	// {
-	// 	int myints[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-	// 	std::deque<int> deq(myints, myints+10);
-
-  	// 	for (std::deque<int>::iterator it = deq.begin(); it != deq.end(); ++it)
-    // 	{
-	// 		std::cout << ' ' << &*it;
-	// 	}
-	// 	//std::cout << " " << deq.capacity() << std::endl;
-	// 	//deq.push_back(10);
-	// 	//std::cout << deq.capacity() << std::endl;
-	// 	for (std::deque<int>::iterator it = deq.begin(); it != deq.end(); ++it)
-    // 	{
-	// 		std::cout << ' ' << &*it;
-	// 	}
-	// 	std::cout << std::endl;
-	// 	int &b = deq[3];
-	// 	std::cout << &deq[3] << "\n" << &b  << "\n"  << deq[3] << "\n" << b << std::endl;
-	// 	//trouver un moyen de check si l'adresse de b correspond toujours au bon element en swapant les elements
-	// 	std::iter_swap(deq.begin(), deq.begin()+3);
-	// 	for (std::deque<int>::iterator it = deq.begin(); it != deq.end(); ++it)
-    // 	{
-	// 		std::cout << ' ' << &*it;
-	// 	}
-	// 	std::cout << std::endl;
-	// 	std::cout << &deq[3] << "\n" << &b  << "\n"  << deq[3] << "\n" << b << std::endl;
-	// 	for (std::deque<int>::iterator it = deq.begin(); it != deq.end(); ++it)
-    // 	{
-	// 		std::cout << ' ' << *it;
-	// 	}
-	// 	std::cout << std::endl;
-	// }
-	return 0;
+	catch(char const* s)
+	{
+		cerr << s << endl;
+	}
+	
 }

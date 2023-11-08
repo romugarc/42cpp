@@ -10,19 +10,19 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= BitcoinExchange
+NAME	= PmergeMe
 
 SRCS	=	main.cpp	\
-			BitcoinExchange.cpp
+			PmergeMe.cpp
 
 OBJS	=	${SRCS:.cpp=.o}
 
-HEADER_FILES	=	BitcoinExchange.hpp
+HEADER_FILES	=	PmergeMe.hpp
 
 CC		=	c++
 RM		=	rm -f
 
-CFLAGS	=	-Wall -Wextra -Werror -std=c++17 -fsanitize=address
+CFLAGS	=	-Wall -Wextra -Werror -std=c++17 -fsanitize=address -g
 
 all:		${NAME}
 
