@@ -35,47 +35,6 @@ std::vector<Numbers*>	vectorAdjustPos(std::vector<Numbers*> nums)
 	return (nums);
 }
 
-void	testing(std::deque<Numbers*> nums, int size)
-{
-	std::deque<Numbers*> bigS;
-	std::deque<Numbers*> Tiny;
-	for (int i = 0; i < size; i = i + 2)
-	{
-		if (size % 2 == 1 && i == size - 1) //nombre impair seul
-		{
-			Tiny.push_back(nums[i]);
-			break;
-		}
-		if (nums[i]->nb > nums[i]->rf.back()->nb)
-		{
-			bigS.push_back(nums[i]);
-			Tiny.push_back(nums[i + 1]);
-		}
-		else
-		{
-			bigS.push_back(nums[i + 1]);
-			Tiny.push_back(nums[i]);
-		}
-	}
-	for (int i = 0; i < size / 2; i++)
-		std::cout << ' ' << bigS[i] << " " << bigS[i]->nb << " " << bigS[i]->rf.back();
-	std::cout << std::endl;
-	for (int i = 0; i < size / 2; i++)
-		std::cout << ' ' << Tiny[i] << " " << Tiny[i]->nb << " " << Tiny[i]->rf.back();
-	std::cout << std::endl;
-	dequeFormPairs(bigS, size / 2);
-	for (int i = 0; i < size / 2; i++)
-	{
-		std::cout << ' ' << bigS[i] << " " << bigS[i]->nb << " " << bigS[i]->rf.back();
-	}
-	std::cout << std::endl;
-	for (int i = 0; i < size; i++)
-	{
-		std::cout << ' ' << nums[i] << " " << nums[i]->nb << " " << nums[i]->rf.back();
-	}
-	std::cout << std::endl;
-}
-
 int	dequeBinarySearch(std::deque<Numbers*> bigS, std::deque<Numbers*> Tiny, size_t index)
 {
 	size_t	xmin = 0;
@@ -142,7 +101,7 @@ std::deque<Numbers*> dequeMergeSort(std::deque<Numbers*> nums, int size)
 	}
 	dequeFormPairs(bigS, bigS.size());
 	bigS = dequeMergeSort(bigS, bigS.size());
-	//insertion	
+	//insertion
 	for (size_t i = 0; i < Tiny.size(); i++)
 		Tiny[i]->pos.push_back(i);
 	for (size_t i = 0; i < bigS.size(); i++)
@@ -153,7 +112,6 @@ std::deque<Numbers*> dequeMergeSort(std::deque<Numbers*> nums, int size)
 	bigS.insert(bigS.begin(), bigS[0]->rf.back());
 	Tiny.erase(Tiny.begin()+bigS[0]->pos.back()); //le premier element de bigS appartenait a Tiny donc pas besoin de rf
 	bigS[0]->pos.pop_back();
-	dequeAdjustPos(Tiny, 0); //optionel? car on peut juste le faire apres le swap
 	dequeAdjustPos(bigS, 0);
 	// for (size_t i = 0; i < bigS.size(); i++)
 	// {
@@ -172,11 +130,10 @@ std::deque<Numbers*> dequeMergeSort(std::deque<Numbers*> nums, int size)
 	dequeAdjustPos(Tiny, 0);
 	//binary search
 	int	x;
-	for (size_t i = 0; i < Tiny.size(); i++)
+	while(Tiny.size() > 0)
 	{
-		x = dequeBinarySearch(bigS, Tiny, i);
-		bigS.insert(bigS.begin()+x, Tiny[i]);
-		std::cout << bigS[x]->nb << std::endl;
+		x = dequeBinarySearch(bigS, Tiny, 0);
+		bigS.insert(bigS.begin()+x, Tiny[0]);
 		Tiny.erase(Tiny.begin());
 		bigS[x]->pos.pop_back();
 		dequeAdjustPos(Tiny, 0);
@@ -205,7 +162,6 @@ int	main (int argc, char **argv)
 	std::deque<Numbers*> deq;
 	for (int i = 0; i < argc - 1; i++)
 		deq.push_back(&nums[i]);
-	//testing(deq, argc - 1);
 	for (size_t i = 0; i < deq.size(); i++)
 	{
 		//std::cout << ' ' << deq[i] << " ";
@@ -234,6 +190,19 @@ int	main (int argc, char **argv)
 	//	std::cout << ' ' << deq[i]->nb;
 	//}
 	//std::cout << std::endl;
+	std::deque<int> done;
+
+	for (size_t i = 0; i < deq.size(); i++)
+	{
+		//std::cout << ' ' << deq[i] << " ";
+		done.push_back(deq[i]->nb);
+		//std::cout << deq[i]->rf.back();
+	}
+	std::cout << std::endl;
+	if (std::is_sorted(done.begin(), done.end()))
+		std::cout << "LET'S FUCKING GO" << std::endl;
+	else
+		std::cout << "fuck" << std::endl;
 	delete [] nums;
 	return 0;
 	// {
