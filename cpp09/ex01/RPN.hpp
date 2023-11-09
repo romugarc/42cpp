@@ -1,41 +1,43 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   RPN.hpp                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rgarcia <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/09 06:56:27 by rgarcia           #+#    #+#             */
+/*   Updated: 2023/11/09 06:57:06 by rgarcia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef RPN_HPP
 # define RPN_HPP
 
 # include <iostream>
-# include <string>
-# include <stack>
-# include <cstdlib>
-
-using std::stack;
-using std::string;
-using std::cout;
-using std::cerr;
-using std::endl;
-using std::atof;
+# include <list>
 
 class RPN
 {
-
+	private:
+		std::list<double> _list;
 	public:
-
-		RPN();
+		RPN( void );
 		RPN( RPN const & src );
 		~RPN();
 
 		RPN &		operator=( RPN const & rhs );
 
-		double			getResult() const;
-		void		calculate(const string & s);
+		void	calculate(char operand);
 
-	private:
+		void pushToList(char c);
+		
+		double	getResult();
+		double	getSize();
 
-		bool		is_valide(const string & s) const;
-		bool		is_in_charset(char c, const string & charset) const;
-		int			count_signe(const string & s) const;
-		int			count_nbr(const string & s) const;
-		stack<double> order;
-		double		result;
-
+		class	DivisionByZeroException : public std::exception {
+			public:
+				virtual const char *what() const throw();
+		};
 };
 
-#endif /* ************************************************************* RPN_H */
+#endif

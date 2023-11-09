@@ -5,15 +5,16 @@
 #                                                     +:+ +:+         +:+      #
 #    By: rgarcia <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/09/09 10:28:48 by rgarcia           #+#    #+#              #
-#    Updated: 2023/10/20 16:43:40 by rgarcia          ###   ########.fr        #
+#    Created: 2023/11/09 06:55:19 by rgarcia           #+#    #+#              #
+#    Updated: 2023/11/09 06:55:49 by rgarcia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= RPN
 
 SRCS	=	main.cpp	\
-			RPN.cpp
+			RPN.cpp		\
+			exception.cpp
 
 OBJS	=	${SRCS:.cpp=.o}
 
@@ -22,7 +23,7 @@ HEADER_FILES	=	RPN.hpp
 CC		=	c++
 RM		=	rm -f
 
-CFLAGS	=	-Wall -Wextra -Werror -std=c++17 -fsanitize=address
+CFLAGS	=	-Wall -Wextra -Werror -std=c++98 -fsanitize=address
 
 all:		${NAME}
 
