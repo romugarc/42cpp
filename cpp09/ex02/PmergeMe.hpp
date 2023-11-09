@@ -159,7 +159,6 @@ T mergeSort(T nums, int size)
 	formPairs(bigS, bigS.size());
 	bigS = mergeSort(bigS, bigS.size());
 	//insertion
-	std::cout << std::endl;
 	for (size_t i = 0; i < Tiny.size(); i++)
 		Tiny[i]->pos.push_back(i);
 	for (size_t i = 0; i < bigS.size(); i++)
