@@ -51,7 +51,12 @@ int	error_handler(int argc, char **argv)
 		std::cout << "Error: argument is invalid" << std::endl;
 		return 1;
 	}
-	for (int i = 0; i < argc; i++)
+	if (argv[1][0] == '\0')
+	{
+		std::cout << "Error: only digits and operands allowed" << std::endl;
+		return 1;
+	}
+	for (int i = 0; argv[1][i] != '\0'; i++)
 	{
 		while (argv[1][i] == ' ')
 			i++;
@@ -97,6 +102,7 @@ int	main (int argc, char **argv)
 				catch (const std::exception &e)
 				{
 					std::cerr << e.what() << '\n';
+					return 0;
 				}
 			}
 		}
