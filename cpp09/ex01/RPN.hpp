@@ -29,7 +29,7 @@ class RPN
 
 		void	calculate(char operand);
 
-		void pushToList(char c);
+		void	pushToList(char c);
 		
 		double	getResult();
 		double	getSize();
