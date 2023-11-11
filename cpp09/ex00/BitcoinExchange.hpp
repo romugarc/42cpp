@@ -1,50 +1,59 @@
-#ifndef BITCOINEXCHANGE_HPP
-# define BITCOINEXCHANGE_HPP
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   BitcoinExchange.hpp                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rgarcia <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/09 10:52:30 by rgarcia           #+#    #+#             */
+/*   Updated: 2023/11/09 10:53:02 by rgarcia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef BITCOIN_EXCHANGE_HPP
+# define BITCOIN_EXCHANGE_HPP
 
 # include <iostream>
-# include <string>
-# include <map>
 # include <fstream>
 # include <sstream>
-# include <cstdlib>
-# include <ctime>
-
-using std::map;
-using std::string;
-using std::cout;
-using std::cerr;
-using std::endl;
-using std::ifstream;
+# include <stdlib.h>
+# include <algorithm>
+# include <map>
 
 class BitcoinExchange
 {
-
+	private:
+		std::map<std::string, double> _db;
 	public:
-
-		BitcoinExchange(const char * database);
+		BitcoinExchange( void );
+		BitcoinExchange( BitcoinExchange const &src );
 		~BitcoinExchange();
 
-		BitcoinExchange &		operator=( BitcoinExchange const & rhs );
+		BitcoinExchange &operator=( BitcoinExchange const &rhs );
 
-		double get_the_value(const string & key);
-		const string & get_the_closest_key(const string & key);
-		void	display() const;
+		void	formDatabase( std::ifstream &datafile );
+		void	initDataFile( const char *database );
 
-	private:
+		std::string const	&getDate(std::string const &date) const;
+		double				getValue(std::string const &date) const;
 
-		map<string, double>	rate_table;
-		
-		void build_map(ifstream & file);
-	
-		BitcoinExchange( BitcoinExchange const & src );
-		BitcoinExchange();
+		size_t	getDbSize( void ) const;
 
+		class	FileNotOpenException : public std::exception {
+			public:
+				virtual const char *what() const throw();
+		};
+
+		class	FirstLineException : public std::exception {
+			public:
+				virtual const char *what() const throw();
+		};
 };
-string ltrim(const string & s);
-string rtrim(const string & s);
-const string trim(const string & s);
-bool is_a_valid_double(const string & s);
 
-std::ostream &			operator<<( std::ostream & o, BitcoinExchange const & i );
+int	error_handler(int argc, char **argv);
+std::string	my_trim(std::string s);
+int	isValidDay(int day, int month, int year);
+int	isValidDate(std::string left);
+int	isValidValue(std::string value);
 
-#endif /* ************************************************* BITCOINEXCHANGE_H */
+#endif

@@ -1,160 +1,248 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rgarcia <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/09 10:53:17 by rgarcia           #+#    #+#             */
+/*   Updated: 2023/11/09 10:53:40 by rgarcia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "BitcoinExchange.hpp"
 
-bool check_date_is_correct(string & clean_date) {
-	if (clean_date.length() != 10)
-		return false;
-	if (!(clean_date[4] == '-' && clean_date[7] == '-'))
-		return false;
-	return true;
-}
-
-bool first_part_check_is_ok(string first_half) {
-
-	// create the usefull string and struct
-	string trimed_first_half;
-	struct tm tm;
-
-	// clean the first part
-	//cerr << "first half ->" << first_half << "<-" << endl;
-	trimed_first_half = trim(first_half);
-	//cerr << "test ->" << trimed_first_half << "<-" << endl;
-
-	// test id the first half contain something other than the | caracter
-	if (trimed_first_half.length() < 1)
+int	error_handler(int argc, char **argv)
+{
+	if (argc != 2)
 	{
-		cout << "Invalide format, string doesn't have character before '|', expected a date" << endl;
-		return false;
-	}
-
-	// create the clean first part containing only the date
-	// first_part_clean = trim(trimed_first_half.substr(0, first_half.length() - 1));
-	// cerr << "test trim clean string : ->" << first_part_clean <<  "<-"  << endl;
-	
-	// check if the date is correct
-	if (!(strptime(trimed_first_half.c_str(), "%Y-%m-%d", &tm) && check_date_is_correct(trimed_first_half)))
-	{
-		cout << "Invalid format, date are in a wrong format, expected format is : year-month-days with year > 1900 month and days must have 2 caracter" << endl;
-		return false;
-	}
-	return true;
-}
-
-string return_first_part(string first_half) {
-
-	//cerr << "j'ai : " << s << "returning ->" << trim(trim(first_half).substr(0, first_half.length() - 1)) << "<-" << endl;
-	return trim(first_half);
-}
-
-bool second_part_check_is_ok(string second_half) {
-
-	//create the data needed
-	string trimed_second_half;
-
-	//cerr << "second_half contain : ->" << second_half << "<- ending here" << endl;
-	trimed_second_half = trim(second_half);
-	//cerr << "trimed second_half contain : ->" << trimed_second_half << "<- ending here" << endl;
-
-	// check if the second half contain something
-	if (trimed_second_half.empty())
-	{
-		cout << "Invalide format, string doesn't have character after '|', expected a float" << endl;
-		return false;
-	}
-
-	// check if the contain of the second half is a correct format for the expected float
-	if (!is_a_valid_double(trimed_second_half))
-	{
-		cout << "Invalide format, the right end side of the '|' character is not in a valide float format, expecting number from 0-9, '.', ',' only" << endl;
-		return false;
-	}
-
-	// convert the string into a double
-	double input_value = atof(second_half.c_str());
-
-	// check if the double is in the correct boundary
-	if (!(input_value >= 0 && input_value <= 1000))
-	{
-		cout.precision(17);
-		cout << "Invalide format, the float must be between 0 and 1000 included, found : => " << input_value << endl;
-		return false;
-	}
-	return true;
-}
-
-double return_second_half(string second_half) {
-	//cerr << "second half ->" << second_half.c_str() << "<-" << endl;
-	return atof(second_half.c_str());
-}
-
-int main(int ac, char **av) {
-
-	// check if correct number of arguement
-	if (ac != 2) {
-		cout << "this program must take exactly one argument witch is the name of the input file that must be to the format : " << endl << endl << "date | value" << endl << endl << " where date is in a \"Year-Month-Day\" format and value must be either a float or a positive interger between 0 and 1000 included, ps the first line is ignore" << endl;
+		std::cout << "Invalid arguments" << std::endl;
 		return 1;
 	}
+	if (argv[1] == NULL)
+	{
+		std::cout << "No file argument" << std::endl;
+		return 1;	
+	}
+	if (argv[1][0] == '\0')
+	{
+		std::cout << "No file argument" << std::endl;
+		return 1;
+	}
+	return 0;
+}
+
+std::string	my_trim(std::string s)
+{
+	if (!s.empty())
+	{
+		size_t start = s.find_first_not_of(' ');
+		std::string subs = s.substr(start);
+		size_t end = s.find_last_not_of(' ');
+
+		subs = s.substr(start, (end + 1 - start));
+		return (subs);
+	}
+	return (s);
+}
+
+void	checkFile(std::ifstream &newfile, std::string &line)
+{
+	if (!newfile.is_open())
+		throw BitcoinExchange::FileNotOpenException();
+	std::getline(newfile, line);
+	if (line.compare("date | value") != 0)
+		throw BitcoinExchange::FirstLineException();
+}
+
+int	isValidValue(std::string value)
+{
+	double	val;
+	int	points = 0;
+
+	if (value.empty())
+		return 0;
+	for (size_t k = 0; k < value.size(); k++)
+	{
+		if (!std::isdigit(value[k]) && value[k] != '.')
+			return -4;
+		if (value[k] == '.')
+			points++;
+	}
+	if (points > 1)
+		return -3;
+	val = std::atof(value.c_str());
+	if (val > 1000.0)
+		return -2;
+	if (val < 0.0)
+		return -1;
+	return 1;
+}
+
+int	isValidDay(int day, int month, int year) {
+	if (year % 4 == 0 && month == 2)
+	{
+		if (day > 29)
+			return 0;
+	}
+	else if (month == 2)
+	{
+		if (day > 28)
+			return 0;
+	}
+	if (month == 4 || month == 6 || month == 9 || month == 11)
+	{
+		if (day > 30)
+			return 0;
+	}
+	else
+	{
+		if (day > 31)
+			return 0;
+	}
+	return 1;
+}
+
+int	countDigits(std::string const &s)
+{
+	int	count = 0;
+
+	for (size_t i = 0; i < s.size(); i++)
+	{
+		if (std::isdigit(s[i]))
+			count++;
+	}
+	return (count);
+}
+
+int	isValidDate(std::string left) {
+	double val;
+	size_t i = 0;
+	size_t j = 0;
+	int day;
+	int month;
+	int year;
+
+	if (!left.empty())
+	{
+		i = left.find_first_of('-');
+		if (i == std::string::npos)
+			return -1;
+	}
+	else
+		return -2;
+	for (size_t k = 0; k < i; k++)
+	{
+		if (!std::isdigit(left[k]))
+			return -3;
+	}
+	std::string subs = left.substr(0, i);
+	if (countDigits(subs) != 4)
+		return -13;
+	val = std::atof(subs.c_str());
+	if (val > 9999 || val < 2009)
+		return -4;
+	year = std::atoi(subs.c_str());
+	subs = left.substr(i + 1, left.size());
+	if (!subs.empty())
+	{
+		j = subs.find_first_of('-');
+		if (j == std::string::npos)
+			return -5;
+	}
+	else
+		return -6;
+	for (size_t k = 0; k < j; k++)
+	{
+		if (!std::isdigit(subs[k]))
+			return -7;
+	}
+	subs = left.substr(i + 1, j);
+	if (countDigits(subs) != 2)
+		return -14;
+	val = std::atof(subs.c_str());
+	if (val > 12 || val < 1)
+		return -8;
+	month = std::atoi(subs.c_str());
+	subs = left.substr(i + j + 2, left.size());
+	if (subs.empty())
+		return -9;
+	for (size_t k = 0; k < subs.size(); k++)
+	{
+		if (!std::isdigit(subs[k]))
+			return -10;
+	}
+	if (countDigits(subs) != 2)
+		return -15;
+	val = std::atof(subs.c_str());
+	if (val > 31 || val < 1)
+		return -11;
+	day = std::atoi(subs.c_str());
+	if (isValidDay(day, month, year) == 0)
+		return -12;
+	return 1;
+}
+
+int	main(int argc, char **argv)
+{
+	std::ifstream newfile;
+	std::string line;
+	std::string left;
+	std::string right;
+	BitcoinExchange exchange;
+
+	if (error_handler(argc, argv) == 1)
+		return 0;
+
+	newfile.open(argv[1], std::ifstream::in);
 	try
 	{
-		// get the data in the specified file
-		BitcoinExchange data1("data.csv");
-		data1.display();
-		// try to open the input file
-		ifstream file(av[1]);
-		if (!file.is_open()) {
-			throw "can't open input file";
-		}
-
-		// init usefull data
-		string line;
-
-		//skip the first line of the file
-		std::getline(file, line);
-
-		// as long as the file contain something
-		while (file.good())
-		{
-			// get the line
-			std::getline(file, line);
-			//cerr << "buffer contain : ->" << line  << "<- ending here" << endl;
-
-			//if the line doesn't contain a | caractere
-			if (line.find('|') == string::npos)
-			{
-				cout << "Invalide format, string doesn't contain the '|' character" << endl;
-				continue;
-			}
-
-			// prepare a stream to split the line
-			std::stringstream tmp_stream(line);
-			//cerr << "buffer contain : ->" << line  << "<- ending here" << endl;
-			// split the line into two part on the | caractere putting the first half in first_half
-			string first_half;
-			getline(tmp_stream, first_half, '|');
-			//cerr << "first first_half ->" << first_half << "<-" << endl;
-			string second_half;
-			getline(tmp_stream, second_half, '|');
-			//cerr << "first second_half ->" << second_half << "<-" << endl;
-
-			if (!first_part_check_is_ok(first_half))
-				continue;
-			if (!second_part_check_is_ok(second_half))
-				continue;
-
-			//cerr << "return first half : ->" << return_first_part(first_half) << "<-" << endl;
-			string date = data1.get_the_closest_key(return_first_part(first_half));
-			//cerr << "date : ->" << date << endl;
-
-			if (tmp_stream.good())
-				cout << "nice try but i can't accept other format than date | value and nothing else after" << endl;
-			else if (date == "false")
-				cout << "the bitcoin didn't existed back then sorry i can't say how much : " << return_second_half(second_half) << " was worth" << endl;
-			else
-				cout << trim(date) << " => " << return_second_half(second_half) << " = " << data1.get_the_value(date) * return_second_half(second_half) << endl;
-		}
+		checkFile(newfile, line);
 	}
-	catch(char const* s)
+	catch (const std::exception &e)
 	{
-		cerr << s << endl;
+		newfile.close();
+		std::cout << e.what() << '\n';
+		return 0;
 	}
+
+	try
+	{
+		exchange.initDataFile("data.csv");
+		if (exchange.getDbSize() == 0)
+		{	
+			std::cout << "Database is empty" << std::endl;
+			return 0;
+		}
+	}
+	catch (const std::exception &e)
+	{
+		std::cerr << e.what() << '\n';
+		return 0;
+	}
+
+	while (newfile.good())
+	{
+		std::getline(newfile, line);
+		if (line.find ('|') == std::string::npos)
+			std::cout << "Error: missing '|' in format" << std::endl;
+		else
+		{
+			std::stringstream line_stream(line);
+			std::getline(line_stream, left, '|');
+			std::getline(line_stream, right);
+			left = my_trim(left);
+			right = my_trim(right);
+			if (isValidDate(left) <= 0)
+				std::cout << "Error: bad input => " << left << std::endl;
+			else if (isValidValue(right) <= 0)
+				std::cout << "Error: bad value => " << right << std::endl;
+			else
+				std::cout << exchange.getDate(left) << " => " << std::atof(right.c_str()) << " = " << exchange.getValue(left) * std::atof(right.c_str()) << std::endl;
+		}
+	}
+
+	newfile.close();
 	
+	return 0;
 }
